@@ -10,37 +10,60 @@
         android:id="@+id/editTextOperand1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Operador 1"
-        android:inputType="numberDecimal"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="16dp"/>
+        android:hint="Operador 1"
+        android:inputType="numberDecimal" />
+
     <EditText
         android:id="@+id/editTextOperand2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextOperand1"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
         android:hint="Operador 2"
-        android:inputType="numberDecimal"
-        android:layout_marginHorizontal="16dp"/>
+        android:inputType="numberDecimal" />
+
     <Button
         android:id="@+id/btnSuma"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Suma"
         android:layout_below="@id/editTextOperand2"
-        android:layout_marginTop="16dp"
         android:layout_marginHorizontal="16dp"
-        android:onClick="performOperation"/>
+        android:layout_marginTop="16dp"
+        android:onClick="performOperation"
+        android:text="Suma" />
+
     <Button
         android:id="@+id/btnResta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Resta"
         android:layout_below="@id/btnSuma"
-        android:layout_marginTop="16dp"
         android:layout_marginHorizontal="16dp"
-        android:onClick="performOperation"/>
+        android:layout_marginTop="16dp"
+        android:onClick="performOperation"
+        android:text="Resta" />
+
+    <Button
+        android:id="@+id/btnMultiplicar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnResta"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="performOperation"
+        android:text="Multiplicación" />
+
+    <Button
+        android:id="@+id/btnDividir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnMultiplicar"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="performOperation"
+        android:text="División" />
 
 
 </RelativeLayout>
