@@ -9,8 +9,17 @@ class ResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
 
-        val tvResult=findViewById<TextView>(R.id.tvResult)
-        val name:String=intent.extras?.getString("EXTRA_NAME").orEmpty()
-        tvResult.text="Hola $name"
+        val tvResult = findViewById<TextView>(R.id.tvResult)
+        val nombre: String = intent.extras?.getString("EXTRA_NOMBRE").orEmpty()
+        val apellidos: String = intent.extras?.getString("EXTRA_APELLIDO").orEmpty()
+        val curso: String = intent.extras?.getString("EXTRA_CURSO").orEmpty()
+        val asignatura: String = intent.extras?.getString("EXTRA_ASIGNATURA").orEmpty()
+        val nota: String = intent.extras?.getString("EXTRA_NOTA").orEmpty()
+        tvResult.text = "Hola, $nombre" +
+                "\nDetalles:" +
+                "\nApellidos: $apellidos" +
+                "\nCurso: $curso" +
+                "\nAsignatura: $asignatura" +
+                "\nNota: $nota"
     }
 }
