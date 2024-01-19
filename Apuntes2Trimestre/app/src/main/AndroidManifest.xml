@@ -13,6 +13,18 @@
         android:theme="@style/Theme.Apuntes2Trimestre"
         tools:targetApi="31">
         <activity
+            android:name=".apuntes2.LineaHorizontalYVerticalConBotones"
+            android:exported="false" />
+        <activity
+            android:name=".apuntes2.LineaHorizontalYVertical2"
+            android:exported="false" />
+        <activity
+            android:name=".apuntes2.LineaHorizontalYVertical"
+            android:exported="false" />
+        <activity
+            android:name=".apuntes2.Formulario"
+            android:exported="false" />
+        <activity
             android:name=".apuntes2.Ejercicio2"
             android:exported="false" />
         <activity
