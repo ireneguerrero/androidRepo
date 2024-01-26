@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Componentes</string>
+    <string name="Saludos">Hola terrícolas</string>
+    <string name="Despedida">Chaito</string>
 </resources>

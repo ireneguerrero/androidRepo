@@ -7,4 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="rosita">#FF9BD2</color>
+    <color name="naranja_pastel">#FFDD95</color>
+    <color name="verde_pastel">#D5F0C1</color>
+    <color name="morado_pastel">#E9A8F2</color>
+    <color name="verde_claro">#A1EEBD</color>
+    <color name="burdeos">#7D0A0A</color>
+    <color name="azulito">#5FBDFF</color>
+    <color name="moradito">#DCBFFF</color>
 </resources>
