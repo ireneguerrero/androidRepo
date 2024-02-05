@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.ficheros1"
+    namespace = "com.ficheros2"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.ficheros1"
+        applicationId = "com.ficheros2"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
