@@ -2,14 +2,17 @@ package com.proyectosqlite20lavenganza
 
 class Nombre {
     var id: Int = 0
-    var NombreUsuario: String? = null
+    var nombreUsuario: String? = null
+    var contraseña: String? = null
 
-    constructor(id: Int, nombre: String) {
+    constructor(id: Int, nombre: String, contraseña: String) {
         this.id = id
-        this.NombreUsuario = nombre
+        this.nombreUsuario = nombre
+        this.contraseña = contraseña
     }
 
-    constructor(nombre: String) {
-        this.NombreUsuario = nombre
+    constructor(nombre: String, contraseña: String) {
+        this.nombreUsuario = nombre
+        this.contraseña = contraseña
     }
 }

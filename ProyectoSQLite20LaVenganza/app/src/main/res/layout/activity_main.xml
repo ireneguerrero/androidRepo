@@ -5,20 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-    <!--Este es el codigo del textView que servirá para mostrar el texto que introduzca el usuario -->
-    <TextView
-        android:id="@+id/tvMuestraNombre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etNombre" />
 
-    <!--
-    Este es el codigo del editText etNombre ,
-    este control permitira al usuario capturar el texto que se desea agregar a la bd
-     -->
     <EditText
         android:id="@+id/etNombre"
         android:layout_width="match_parent"
@@ -29,29 +16,51 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="Nombre"
-        app:layout_constraintBottom_toTopOf="@+id/tvMuestraNombre"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <!--Este es el codigo del boton btnAgregar que servirá para agregar un Registro a la bd -->
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/etContraseña"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="Contraseña"
+        app:layout_constraintTop_toBottomOf="@+id/etNombre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <Button
         android:id="@+id/btnAgregar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
         android:text="Agregar"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etContraseña"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnTodos" />
-    <!--Este es el codigo del boton btnTodos que servirá para Mostrar todos los registros de la bd -->
+        app:layout_constraintStart_toEndOf="@+id/btnMostrar"/>
+
     <Button
-        android:id="@+id/btnTodos"
+        android:id="@+id/btnMostrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
         android:text="Mostrar todos"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnAgregar"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/etContraseña"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnAgregar"/>
+
+    <TextView
+        android:id="@+id/tvMuestraNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/btnAgregar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
