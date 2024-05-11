@@ -5,9 +5,8 @@ import android.os.Bundle
 
 class LoginActivity : AppCompatActivity() {
 
-    //private lateinit var auth: FirebaseAuth
-
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_Ghostly)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
     }
