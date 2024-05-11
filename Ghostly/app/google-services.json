@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "462626683794",
+    "project_id": "ghostly-tdf",
+    "storage_bucket": "ghostly-tdf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462626683794:android:fa7f1dc522c25c6f981f4b",
+        "android_client_info": {
+          "package_name": "com.ghostly"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9nQVdt_FVUB4oCXR39rIDnj4eEsKDn8w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
