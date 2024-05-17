@@ -50,4 +50,6 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.android.gms:play-services-auth:21.1.1")
     implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation("com.google.firebase:firebase-firestore-ktx:25.0.0")
+    implementation ("com.google.firebase:firebase-firestore:25.0.0")
 }

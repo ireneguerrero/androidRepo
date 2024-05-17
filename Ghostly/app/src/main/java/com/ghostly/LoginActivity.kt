@@ -4,10 +4,14 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet.Constraint
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -17,45 +21,53 @@ import com.google.firebase.auth.GoogleAuthProvider
 
 class LoginActivity : AppCompatActivity() {
 
-    private val GOOGLE_SIGN_IN = 100
+    private val google_sign_in=100
+    private lateinit var btnRegistro: Button
+    private lateinit var btnLogin: Button
+    private lateinit var etEmail: EditText
+    private lateinit var etContra: EditText
+    private lateinit var ibGoogle: ImageButton
+    private lateinit var loginLY: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Ghostly)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        btnRegistro = findViewById(R.id.btnRegistro)
+        btnLogin = findViewById(R.id.btnLogin)
+        etEmail = findViewById(R.id.etEmail)
+        etContra = findViewById(R.id.etContra)
+        ibGoogle = findViewById(R.id.ibGoogle)
+        loginLY = findViewById(R.id.loginLY)
+
         setup()
         session()
     }
 
     private fun setup() {
-        val btnRegistro = findViewById<Button>(R.id.btnRegistro)
-        val btnLogin = findViewById<Button>(R.id.btnLogin)
-        val etNombre = findViewById<EditText>(R.id.etNombre)
-        val etContra = findViewById<EditText>(R.id.etContra)
-        val ibGoogle = findViewById<ImageButton>(R.id.ibGoogle)
+
         btnRegistro.setOnClickListener {
-            if (etNombre.text.isNotEmpty() && etContra.text.isNotEmpty()) {
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(
-                    etNombre.text.toString(),
-                    etContra.text.toString()
-                ).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        showHome(it.result?.user?.email ?: "", ProviderType.BASIC)
-                    } else {
+            if(etEmail.text.isNotEmpty()&&etContra.text.isNotEmpty()){
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(etEmail.text.toString(),etContra.text.toString()).addOnCompleteListener{
+                    if (it.isSuccessful){
+                        val intent = Intent(this,HomeActivity::class.java)
+                        intent.putExtra("email", it.result?.user?.email ?:"")
+                        startActivity(intent)
+                    }else{
                         showAlert()
                     }
                 }
             }
         }
         btnLogin.setOnClickListener {
-            if (etNombre.text.isNotEmpty() && etContra.text.isNotEmpty()) {
-                FirebaseAuth.getInstance().signInWithEmailAndPassword(
-                    etNombre.text.toString(),
-                    etContra.text.toString()
-                ).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        showHome(it.result?.user?.email ?: "", ProviderType.BASIC)
-                    } else {
+            if(etEmail.text.isNotEmpty()&&etContra.text.isNotEmpty()){
+                FirebaseAuth.getInstance().signInWithEmailAndPassword(etEmail.text.toString(),etContra.text.toString()).addOnCompleteListener{
+                    if (it.isSuccessful){
+                        val intent = Intent(this,HomeActivity::class.java)
+                        intent.putExtra("email", it.result?.user?.email ?:"")
+                        startActivity(intent)
+                    }else{
                         showAlert()
                     }
                 }
@@ -63,13 +75,13 @@ class LoginActivity : AppCompatActivity() {
         }
 
         ibGoogle.setOnClickListener {
-            //Configuración
             val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail().build()
 
-            val googleClient = GoogleSignIn.getClient(this, googleConf)
+            val googleClient = GoogleSignIn.getClient(this,googleConf)
             googleClient.signOut()
-            startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN)
+            startActivityForResult(googleClient.signInIntent, google_sign_in)
         }
 
     }
@@ -83,49 +95,47 @@ class LoginActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showHome(nombre: String, provider: ProviderType) {
-        val homeIntent = Intent(this, HomeActivity::class.java).apply {
-            putExtra("nombre", nombre)
-            putExtra("provider", provider.name)
-        }
-        startActivity(homeIntent)
-    }
-
     private fun session() {
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
-        val nombre = prefs.getString("nombre", null)
-        val provider = prefs.getString("provider", null)
+        val email = prefs.getString("email",null)
 
-        if (nombre != null && provider != null) {
-            showHome(nombre, ProviderType.valueOf(provider))
+        if(email != null){
+            loginLY.visibility = View.INVISIBLE
+            val intent = Intent(this,HomeActivity::class.java)
+            intent.putExtra("email", email)
+            startActivity(intent)
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == GOOGLE_SIGN_IN) {
+        if (requestCode == google_sign_in){
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
 
             try {
-                val account = task.getResult(ApiException::class.java)
-
-                if (account != null) {
-                    val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-                    FirebaseAuth.getInstance().signInWithCredential(credential)
-                        .addOnCompleteListener {
-                            if (it.isSuccessful) {
-                                showHome(account.email ?: "", ProviderType.GOOGLE)
-                            } else {
-                                showAlert()
-                            }
+                val account=task.getResult(ApiException::class.java)
+                if (account != null){
+                    val credential = GoogleAuthProvider.getCredential(account.idToken,null)
+                    FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
+                        if(it.isSuccessful){
+                            val intent = Intent(this,HomeActivity::class.java)
+                            intent.putExtra("email", account.email ?:"")
+                            startActivity(intent)
+                        }else{
+                            Toast.makeText(this,"Fallo al crear usuario",Toast.LENGTH_SHORT).show()
                         }
-
+                    }
                 }
-            } catch (e: ApiException) {
+            }catch (e: ApiException){
                 showAlert()
             }
 
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        loginLY.visibility=View.VISIBLE
     }
 
 }
