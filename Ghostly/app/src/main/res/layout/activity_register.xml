@@ -1,0 +1,362 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/light_light_purple"
+    tools:context=".RegisterActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageButton
+            android:id="@+id/settings_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_settings" />
+
+        <TextView
+            android:id="@+id/date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Wednesday, March 6"
+            android:textSize="25sp"
+            android:textColor="@color/pastel_yellow"
+            android:fontFamily="@font/fuente" />
+
+        <!--<ImageButton
+            android:id="@+id/edit_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:background="@null"
+            android:src="@drawable/ic_edit" />-->
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/rounded_corner_background"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="How was your day?"
+            android:textSize="20sp"
+            android:textColor="@color/pastel_yellow"
+            android:fontFamily="@font/fuente"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- Botones de emociones -->
+            <ImageButton
+                android:id="@+id/emotion_happy"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/emotion_button_background"
+                android:scaleType="fitCenter"
+                android:src="@drawable/muyfeliz" />
+            <ImageButton
+                android:id="@+id/emotion_smile"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/emotion_button_background"
+                android:scaleType="fitCenter"
+                android:src="@drawable/feliz" />
+            <ImageButton
+                android:id="@+id/emotion_neutral"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/emotion_button_background"
+                android:scaleType="fitCenter"
+                android:src="@drawable/normal" />
+            <ImageButton
+                android:id="@+id/emotion_sad"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/emotion_button_background"
+                android:scaleType="fitCenter"
+                android:src="@drawable/triste" />
+            <ImageButton
+                android:id="@+id/emotion_verysad"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/emotion_button_background"
+                android:scaleType="fitCenter"
+                android:src="@drawable/muytriste" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Repeat for each section like Weather, People, Relationship, etc. -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/rounded_corner_background"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Weather"
+            android:textSize="20sp"
+            android:textColor="@color/pastel_yellow"
+            android:fontFamily="@font/fuente"
+            android:layout_gravity="start"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- Repeat for each weather icon
+            <ImageButton
+                android:id="@+id/weather_sunny"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="8dp"
+                android:background="@null"
+                android:src="@drawable/ic_sunny" />-->
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Meals Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/rounded_corner_background"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meals"
+            android:textSize="20sp"
+            android:textColor="@color/pastel_yellow"
+            android:fontFamily="@font/fuente"
+            android:layout_gravity="start"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- Repeat for each meal icon
+            <ImageButton
+                android:id="@+id/meal_breakfast"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="8dp"
+                android:background="@null"
+                android:src="@drawable/ic_breakfast" />-->
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Health Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/rounded_corner_background"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Health"
+            android:textSize="20sp"
+            android:textColor="@color/pastel_yellow"
+            android:fontFamily="@font/fuente"
+            android:layout_gravity="start"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- Repeat for each health icon
+            <ImageButton
+                android:id="@+id/health_sick"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="8dp"
+                android:background="@null"
+                android:src="@drawable/ic_sick" />-->
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Emotions Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/rounded_corner_background"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Emotions"
+            android:textSize="20sp"
+            android:textColor="@color/pastel_yellow"
+            android:fontFamily="@font/fuente"
+            android:layout_gravity="start"
+            android:layout_marginBottom="8dp"/>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:rowCount="4"
+            android:columnCount="4"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- Repeat for each emotion icon
+            <ImageButton
+                android:id="@+id/emotion_excited"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="8dp"
+                android:background="@null"
+                android:src="@drawable/ic_excited" />-->
+        </GridLayout>
+    </LinearLayout>
+
+    <!-- Sleep Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/rounded_corner_background"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sleep"
+            android:textSize="20sp"
+            android:textColor="@color/pastel_yellow"
+            android:fontFamily="@font/fuente"
+            android:layout_gravity="start"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/sleep_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Record your sleep..."
+            android:background="@drawable/edit_text_background"
+            android:padding="8dp"
+            android:textColor="@color/pastel_yellow"
+            android:textColorHint="@color/pastel_yellow"
+            android:fontFamily="@font/fuente"/>
+    </LinearLayout>
+
+    <!-- Note Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/rounded_corner_background"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today's note"
+            android:textSize="20sp"
+            android:textColor="@color/pastel_yellow"
+            android:fontFamily="@font/fuente"
+            android:layout_gravity="start"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/note_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Write here..."
+            android:background="@drawable/edit_text_background"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:fontFamily="@font/fuente"/>
+    </LinearLayout>
+
+    <!-- Photo Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/rounded_corner_background"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today's photo"
+            android:textSize="20sp"
+            android:textColor="@color/pastel_yellow"
+            android:fontFamily="@font/fuente"
+            android:layout_gravity="start"
+            android:layout_marginBottom="8dp"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/photo_background"
+            android:gravity="center">
+
+            <!--<ImageButton
+                android:id="@+id/add_photo_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:src="@drawable/ic_add_photo" />-->
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- Done Button -->
+    <Button
+        android:id="@+id/done_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:background="@color/pastel_yellow"
+        android:textColor="@android:color/white"
+        android:fontFamily="@font/fuente"
+        android:padding="16dp" />
+
+</LinearLayout>

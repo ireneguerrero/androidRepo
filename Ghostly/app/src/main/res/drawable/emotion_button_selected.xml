@@ -1,0 +1,4 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/pastel_yellow" /> <!-- Fondo amarillo para el botón seleccionado -->
+    <corners android:radius="8dp" />
+</shape>

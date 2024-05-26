@@ -1,0 +1,19 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Fondo de la barra de navegación -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/light_light_purple" />
+        </shape>
+    </item>
+    <!-- Endidura -->
+    <item>
+        <shape>
+            <solid android:color="@color/light_light_purple" />
+            <path
+                android:fillType="evenOdd"
+                android:pathData="M0,80 C60,0 120,0 180,80 L180,160 L0,160 Z"
+                android:strokeWidth="0"
+                android:strokeColor="@android:color/transparent" />
+        </shape>
+    </item>
+</layer-list>

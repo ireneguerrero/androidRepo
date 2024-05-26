@@ -1,0 +1,95 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/light_light_purple">
+
+    <!-- Header for Days of the Week -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:weightSum="7">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Mon"
+            android:textColor="@color/pastel_yellow"
+            android:fontFamily="@font/fuente"
+            android:textSize="23sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Tue"
+            android:textColor="@color/pastel_yellow"
+            android:fontFamily="@font/fuente"
+            android:textSize="23sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Wed"
+            android:textColor="@color/pastel_yellow"
+            android:fontFamily="@font/fuente"
+            android:textSize="23sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Thu"
+            android:textColor="@color/pastel_yellow"
+            android:fontFamily="@font/fuente"
+            android:textSize="23sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Fri"
+            android:textColor="@color/pastel_yellow"
+            android:fontFamily="@font/fuente"
+            android:textSize="23sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Sat"
+            android:textColor="@color/pastel_yellow"
+            android:fontFamily="@font/fuente"
+            android:textSize="23sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Sun"
+            android:textColor="@color/pastel_yellow"
+            android:fontFamily="@font/fuente"
+            android:textSize="23sp" />
+    </LinearLayout>
+
+    <!-- Calendar Grid -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/calendar_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="464dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/mid_light_purple" />
+</LinearLayout>

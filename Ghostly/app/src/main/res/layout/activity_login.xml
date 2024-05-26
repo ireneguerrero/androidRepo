@@ -15,56 +15,59 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="16dp"
-        android:text="Ghostly"
         android:fontFamily="@font/fuente"
+        android:text="Ghostly"
         android:textAlignment="center"
-        android:textSize="70sp"
         android:textColor="@color/pastel_yellow"
+        android:textSize="70sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imagen"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginTop="150dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="150dp"
         android:layout_marginEnd="8dp"
         android:src="@drawable/muyfeliz"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitulo"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitulo"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:inputType="textPersonName"
-        android:hint="Email"
-        android:fontFamily="@font/fuente"
-        android:ems="10"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/imagen"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/pastel_yellow"
+        android:ems="10"
+        android:fontFamily="@font/fuente"
+        android:hint="Email"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:backgroundTint="@color/pastel_yellow"/>
+        app:layout_constraintTop_toBottomOf="@+id/imagen" />
+
     <EditText
         android:id="@+id/etContra"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:inputType="textPassword"
-        android:hint="Password"
-        android:fontFamily="@font/fuente"
-        android:ems="10"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/etEmail"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/pastel_yellow"
+        android:ems="10"
+        android:fontFamily="@font/fuente"
+        android:hint="Password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:backgroundTint="@color/pastel_yellow"/>
+        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
 
     <Button
         android:id="@+id/btnLogin"
@@ -75,25 +78,28 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/button_rounded"
         android:fontFamily="@font/fuente"
-        android:textColor="@color/pastel_yellow"
         android:text="Login"
+        android:textSize="19dp"
+        android:textColor="@color/pastel_yellow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etContra" />
+
     <Button
         android:id="@+id/btnRegistro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign up"
-        android:fontFamily="@font/fuente"
-        android:textColor="@color/pastel_yellow"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="32dp"
-        android:background="@drawable/button_rounded"/>
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/button_rounded"
+        android:fontFamily="@font/fuente"
+        android:text="Sign up"
+        android:textSize="19dp"
+        android:textColor="@color/pastel_yellow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
     <ImageButton
         android:id="@+id/ibGoogle"

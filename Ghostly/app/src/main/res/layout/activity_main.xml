@@ -1,0 +1,102 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_light_purple"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/month_year_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="May 2024"
+        android:textSize="25sp"
+        android:fontFamily="@font/fuente"
+        android:textColor="@color/pastel_yellow" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/calendar_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/month_year_text"
+        android:layout_above="@id/bottom_navigation"
+        android:layout_weight="1" />
+
+    <RelativeLayout
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom_nav_background"
+        android:backgroundTint="@color/pastel_yellow"
+        android:paddingTop="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="5">
+
+            <ImageButton
+                android:id="@+id/navigation_calendar"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_calendar"
+                android:contentDescription="@string/calendar"
+                android:background="@null"
+                android:scaleType="centerInside" />
+
+            <ImageButton
+                android:id="@+id/navigation_statistics"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:contentDescription="@string/statistics"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_statistics" />
+
+            <!-- Empty space for the central button -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/navigation_store"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_store"
+                android:contentDescription="@string/store"
+                android:background="@null"
+                android:scaleType="centerInside" />
+
+            <ImageButton
+                android:id="@+id/navigation_settings"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_settings"
+                android:contentDescription="@string/settings"
+                android:background="@null"
+                android:scaleType="centerInside" />
+        </LinearLayout>
+
+        <!-- Central button -->
+        <ImageButton
+            android:id="@+id/navigation_register"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:src="@drawable/muyfeliz"
+            android:contentDescription="@string/register"
+            android:scaleType="fitCenter"
+            android:layout_marginBottom="20dp" /> <!-- Aumentar el margen inferior para moverlo hacia arriba -->
+    </RelativeLayout>
+</RelativeLayout>

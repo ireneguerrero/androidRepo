@@ -21,7 +21,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 
 class LoginActivity : AppCompatActivity() {
 
-    private val google_sign_in=100
+    private val google_sign_in = 100
     private lateinit var btnRegistro: Button
     private lateinit var btnLogin: Button
     private lateinit var etEmail: EditText
@@ -48,29 +48,34 @@ class LoginActivity : AppCompatActivity() {
     private fun setup() {
 
         btnRegistro.setOnClickListener {
-            if(etEmail.text.isNotEmpty()&&etContra.text.isNotEmpty()){
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(etEmail.text.toString(),etContra.text.toString()).addOnCompleteListener{
-                    if (it.isSuccessful){
-                        val intent = Intent(this,HomeActivity::class.java)
-                        intent.putExtra("email", it.result?.user?.email ?:"")
+            if (etEmail.text.isNotEmpty() && etContra.text.isNotEmpty()) {
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(
+                    etEmail.text.toString(),
+                    etContra.text.toString()
+                ).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.putExtra("email", it.result?.user?.email ?: "")
                         startActivity(intent)
-                    }else{
+                    } else {
                         showAlert()
                     }
                 }
             }
         }
         btnLogin.setOnClickListener {
-            if(etEmail.text.isNotEmpty()&&etContra.text.isNotEmpty()){
-                FirebaseAuth.getInstance().signInWithEmailAndPassword(etEmail.text.toString(),etContra.text.toString()).addOnCompleteListener{
-                    if (it.isSuccessful){
-                        val intent = Intent(this,HomeActivity::class.java)
-                        intent.putExtra("email", it.result?.user?.email ?:"")
-                        startActivity(intent)
-                    }else{
-                        showAlert()
+            if (etEmail.text.isNotEmpty() && etContra.text.isNotEmpty()) {
+                FirebaseAuth.getInstance()
+                    .signInWithEmailAndPassword(etEmail.text.toString(), etContra.text.toString())
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            val intent = Intent(this, MainActivity::class.java)
+                            intent.putExtra("email", it.result?.user?.email ?: "")
+                            startActivity(intent)
+                        } else {
+                            showAlert()
+                        }
                     }
-                }
             }
         }
 
@@ -79,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail().build()
 
-            val googleClient = GoogleSignIn.getClient(this,googleConf)
+            val googleClient = GoogleSignIn.getClient(this, googleConf)
             googleClient.signOut()
             startActivityForResult(googleClient.signInIntent, google_sign_in)
         }
@@ -97,11 +102,11 @@ class LoginActivity : AppCompatActivity() {
 
     private fun session() {
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
-        val email = prefs.getString("email",null)
+        val email = prefs.getString("email", null)
 
-        if(email != null){
+        if (email != null) {
             loginLY.visibility = View.INVISIBLE
-            val intent = Intent(this,HomeActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("email", email)
             startActivity(intent)
         }
@@ -109,24 +114,26 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == google_sign_in){
+        if (requestCode == google_sign_in) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
 
             try {
-                val account=task.getResult(ApiException::class.java)
-                if (account != null){
-                    val credential = GoogleAuthProvider.getCredential(account.idToken,null)
-                    FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
-                        if(it.isSuccessful){
-                            val intent = Intent(this,HomeActivity::class.java)
-                            intent.putExtra("email", account.email ?:"")
-                            startActivity(intent)
-                        }else{
-                            Toast.makeText(this,"Fallo al crear usuario",Toast.LENGTH_SHORT).show()
+                val account = task.getResult(ApiException::class.java)
+                if (account != null) {
+                    val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                    FirebaseAuth.getInstance().signInWithCredential(credential)
+                        .addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                val intent = Intent(this, MainActivity::class.java)
+                                intent.putExtra("email", account.email ?: "")
+                                startActivity(intent)
+                            } else {
+                                Toast.makeText(this, "Fallo al crear usuario", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
                         }
-                    }
                 }
-            }catch (e: ApiException){
+            } catch (e: ApiException) {
                 showAlert()
             }
 
@@ -135,7 +142,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        loginLY.visibility=View.VISIBLE
+        loginLY.visibility = View.VISIBLE
     }
 
 }
