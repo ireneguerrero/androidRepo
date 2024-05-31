@@ -41,7 +41,7 @@ class CalendarPagerAdapter(
 
         // Add the days of the current month
         for (day in 1..daysInMonth) {
-            days.add(DayModel(day, R.drawable.normal))
+            days.add(DayModel(day, R.drawable.nada))
         }
 
         return days

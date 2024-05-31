@@ -1,94 +1,182 @@
 package com.ghostly
 
-import android.app.AlertDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.customview.SleepTimePickerView
-import java.text.SimpleDateFormat
 import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
+
+    private lateinit var selectedWeather: MutableSet<Int>
+    private lateinit var selectedMeals: MutableSet<Int>
+    private lateinit var selectedHealth: MutableSet<Int>
+    private lateinit var selectedEmotions: MutableSet<Int>
+    private var selectedDayEmotion: Int? = null
+
+    private lateinit var bedTimeTextView: TextView
+    private lateinit var wakeTimeTextView: TextView
+    private lateinit var timeAsleepTextView: TextView
+    private var bedTimeHour: Int = 2
+    private var bedTimeMinute: Int = 20
+    private var wakeTimeHour: Int = 8
+    private var wakeTimeMinute: Int = 30
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        val selectedDay = intent.getIntExtra("SELECTED_DAY", -1)
-        val selectedEmotion = intent.getIntExtra("SELECTED_EMOTION", -1)
+        selectedWeather = mutableSetOf()
+        selectedMeals = mutableSetOf()
+        selectedHealth = mutableSetOf()
+        selectedEmotions = mutableSetOf()
 
-        // Muestra el día seleccionado o el día actual si no hay un día seleccionado
-        val dateText: TextView = findViewById(R.id.date_text)
-        if (selectedDay != -1) {
-            dateText.text = "Selected Day: $selectedDay"
-        } else {
-            val currentDate = SimpleDateFormat("EEEE, MMMM d", Locale.getDefault()).format(Date())
-            dateText.text = currentDate
-        }
-
-        // Configura los botones de emociones para mostrar el seleccionado
-        val happyButton: ImageButton = findViewById(R.id.emotion_happy)
-        val smileButton: ImageButton = findViewById(R.id.emotion_smile)
-        val neutralButton: ImageButton = findViewById(R.id.emotion_neutral)
-        val sadButton: ImageButton = findViewById(R.id.emotion_sad)
-        val verysadButton: ImageButton = findViewById(R.id.emotion_verysad)
-
-        val buttons = listOf(happyButton, smileButton, neutralButton, sadButton, verysadButton)
-
-        // Marca el botón correspondiente a la emoción seleccionada
-        buttons.forEach { button ->
-            if (button.id == getEmotionButtonId(selectedEmotion)) {
-                button.isSelected = true
-            }
-        }
-
-        // Configura la selección de los botones
-        buttons.forEach { button ->
-            button.setOnClickListener {
-                buttons.forEach { it.isSelected = false }
-                button.isSelected = true
-            }
-        }
-
-        // Configurar el campo de entrada de sueño para mostrar el diálogo del selector de tiempo
-        val sleepInput: EditText = findViewById(R.id.sleep_input)
+        val sleepInput = findViewById<EditText>(R.id.sleep_input)
         sleepInput.setOnClickListener {
             showSleepTimePickerDialog()
         }
+
+        val doneButton = findViewById<Button>(R.id.done_button)
+        doneButton.setOnClickListener {
+            // Lógica para guardar los datos y volver al calendario
+            finish() // O la lógica que necesites para volver al calendario
+        }
+
+        val dayEmotionButtons = listOf(
+            findViewById<ImageButton>(R.id.emotion_happy),
+            findViewById<ImageButton>(R.id.emotion_smile),
+            findViewById<ImageButton>(R.id.emotion_neutral),
+            findViewById<ImageButton>(R.id.emotion_sad),
+            findViewById<ImageButton>(R.id.emotion_verysad)
+        )
+
+        val weatherButtons = listOf(
+            findViewById<ImageButton>(R.id.weather_sunny),
+            findViewById<ImageButton>(R.id.weather_cloudy),
+            findViewById<ImageButton>(R.id.weather_rainy),
+            findViewById<ImageButton>(R.id.weather_windy),
+            findViewById<ImageButton>(R.id.weather_snowy)
+        )
+
+        val emotionButtons = listOf(
+            findViewById<ImageButton>(R.id.emotion_inlove),
+            findViewById<ImageButton>(R.id.emotion_celebrating),
+            findViewById<ImageButton>(R.id.emotion_relax),
+            findViewById<ImageButton>(R.id.emotion_proud),
+            findViewById<ImageButton>(R.id.emotion_tired),
+            findViewById<ImageButton>(R.id.emotion_anxious),
+            findViewById<ImageButton>(R.id.emotion_crying),
+            findViewById<ImageButton>(R.id.emotion_mad)
+        )
+
+        // Configuración de selección única para "How was your day?"
+        setupSingleSelection(dayEmotionButtons)
+
+        // Configuración de selección múltiple para otras secciones
+        setupMultiSelection(weatherButtons, selectedWeather)
+        setupMultiSelection(emotionButtons, selectedEmotions)
+
+        // Repite la configuración para otras secciones como Meals y Health
     }
 
     private fun showSleepTimePickerDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_sleep_picker, null)
-        val sleepTimePickerView: SleepTimePickerView = dialogView.findViewById(R.id.sleep_time_picker)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_sleep_time_picker, null)
+        val bedTime = dialogView.findViewById<TextView>(R.id.bed_time)
+        val wakeTime = dialogView.findViewById<TextView>(R.id.wake_time)
+        val timeAsleep = dialogView.findViewById<TextView>(R.id.time_asleep)
+
+        bedTime.text = String.format("%02d:%02d", bedTimeHour, bedTimeMinute)
+        wakeTime.text = String.format("%02d:%02d", wakeTimeHour, wakeTimeMinute)
+        updateSleepDuration(bedTimeHour, bedTimeMinute, wakeTimeHour, wakeTimeMinute, timeAsleep)
+
+        bedTime.setOnClickListener {
+            val timePickerDialog = TimePickerDialog(this, { _, hour, minute ->
+                bedTimeHour = hour
+                bedTimeMinute = minute
+                bedTime.text = String.format("%02d:%02d", hour, minute)
+                updateSleepDuration(bedTimeHour, bedTimeMinute, wakeTimeHour, wakeTimeMinute, timeAsleep)
+            }, bedTimeHour, bedTimeMinute, false)
+            timePickerDialog.show()
+        }
+
+        wakeTime.setOnClickListener {
+            val timePickerDialog = TimePickerDialog(this, { _, hour, minute ->
+                wakeTimeHour = hour
+                wakeTimeMinute = minute
+                wakeTime.text = String.format("%02d:%02d", hour, minute)
+                updateSleepDuration(bedTimeHour, bedTimeMinute, wakeTimeHour, wakeTimeMinute, timeAsleep)
+            }, wakeTimeHour, wakeTimeMinute, false)
+            timePickerDialog.show()
+        }
 
         val dialog = AlertDialog.Builder(this)
             .setView(dialogView)
-            .setCancelable(false)
+            .setCancelable(true)
             .create()
 
-        dialogView.findViewById<ImageButton>(R.id.close_button).setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialogView.findViewById<Button>(R.id.button_done).setOnClickListener {
-            // Aquí puedes obtener los tiempos seleccionados del SleepTimePickerView
+        dialogView.findViewById<Button>(R.id.done_button).setOnClickListener {
+            findViewById<EditText>(R.id.sleep_input).setText(timeAsleep.text)
             dialog.dismiss()
         }
 
         dialog.show()
     }
 
-    private fun getEmotionButtonId(emotion: Int): Int {
-        return when (emotion) {
-            R.drawable.muyfeliz -> R.id.emotion_happy
-            R.drawable.feliz -> R.id.emotion_smile
-            R.drawable.normal -> R.id.emotion_neutral
-            R.drawable.triste -> R.id.emotion_sad
-            R.drawable.muytriste -> R.id.emotion_verysad
-            else -> -1
+    private fun updateSleepDuration(bedHour: Int, bedMinute: Int, wakeHour: Int, wakeMinute: Int, textView: TextView) {
+        val bedTime = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, bedHour)
+            set(Calendar.MINUTE, bedMinute)
+        }
+
+        val wakeTime = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, wakeHour)
+            set(Calendar.MINUTE, wakeMinute)
+        }
+
+        val diff = wakeTime.timeInMillis - bedTime.timeInMillis
+        val hours = (diff / (1000 * 60 * 60)).toInt()
+        val minutes = ((diff / (1000 * 60)) % 60).toInt()
+        textView.text = String.format("Time asleep %dh %02dm", hours, minutes)
+    }
+
+    private fun setupSingleSelection(buttons: List<ImageButton>) {
+        buttons.forEach { button ->
+            button.setOnClickListener {
+                buttons.forEach { it.isSelected = false }
+                button.isSelected = true
+                selectedDayEmotion = button.id
+                updateButtonSelection(buttons, button)
+            }
+        }
+    }
+
+    private fun setupMultiSelection(buttons: List<ImageButton>, selectedSet: MutableSet<Int>) {
+        buttons.forEach { button ->
+            button.setOnClickListener {
+                if (selectedSet.contains(button.id)) {
+                    selectedSet.remove(button.id)
+                    button.isSelected = false
+                    button.setBackgroundResource(0) // Reset background when unselected
+                } else {
+                    selectedSet.add(button.id)
+                    button.isSelected = true
+                    button.setBackgroundResource(R.drawable.selected_background) // Apply custom background when selected
+                }
+            }
+        }
+    }
+
+    private fun updateButtonSelection(buttons: List<ImageButton>, selectedButton: ImageButton) {
+        buttons.forEach { button ->
+            if (button == selectedButton) {
+                button.setBackgroundResource(R.drawable.selected_background)
+            } else {
+                button.setBackgroundResource(0)
+            }
         }
     }
 }

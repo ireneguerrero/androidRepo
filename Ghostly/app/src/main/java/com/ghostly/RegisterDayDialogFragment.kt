@@ -61,7 +61,6 @@ class RegisterDayDialogFragment(private val onEmotionSelected: (Int) -> Unit) : 
         )
         dialog?.window?.setGravity(Gravity.CENTER)
         val params: WindowManager.LayoutParams? = dialog?.window?.attributes
-        params?.verticalMargin = 0.1f
         dialog?.window?.attributes = params as WindowManager.LayoutParams
     }
 }

@@ -1,362 +1,696 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/light_light_purple"
     tools:context=".RegisterActivity">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="16dp">
 
-        <ImageButton
-            android:id="@+id/settings_button"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:background="@null"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_settings" />
-
-        <TextView
-            android:id="@+id/date_text"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Wednesday, March 6"
-            android:textSize="25sp"
-            android:textColor="@color/pastel_yellow"
-            android:fontFamily="@font/fuente" />
+            android:padding="16dp">
 
-        <!--<ImageButton
-            android:id="@+id/edit_button"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentEnd="true"
-            android:background="@null"
-            android:src="@drawable/ic_edit" />-->
-    </RelativeLayout>
+            <ImageButton
+                android:id="@+id/settings_button"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_settings" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@drawable/rounded_corner_background"
-        android:layout_marginBottom="16dp">
+            <TextView
+                android:id="@+id/date_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Wednesday, March 6"
+                android:textSize="25sp"
+                android:textColor="@color/pastel_yellow"
+                android:fontFamily="@font/fuente" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="How was your day?"
-            android:textSize="20sp"
-            android:textColor="@color/pastel_yellow"
-            android:fontFamily="@font/fuente"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="8dp"/>
+            <ImageButton
+                android:id="@+id/edit_button"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:background="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_edit" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/rounded_corner_background"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_horizontal">
 
-            <!-- Botones de emociones -->
-            <ImageButton
-                android:id="@+id/emotion_happy"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_margin="8dp"
-                android:background="@drawable/emotion_button_background"
-                android:scaleType="fitCenter"
-                android:src="@drawable/muyfeliz" />
-            <ImageButton
-                android:id="@+id/emotion_smile"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_margin="8dp"
-                android:background="@drawable/emotion_button_background"
-                android:scaleType="fitCenter"
-                android:src="@drawable/feliz" />
-            <ImageButton
-                android:id="@+id/emotion_neutral"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_margin="8dp"
-                android:background="@drawable/emotion_button_background"
-                android:scaleType="fitCenter"
-                android:src="@drawable/normal" />
-            <ImageButton
-                android:id="@+id/emotion_sad"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_margin="8dp"
-                android:background="@drawable/emotion_button_background"
-                android:scaleType="fitCenter"
-                android:src="@drawable/triste" />
-            <ImageButton
-                android:id="@+id/emotion_verysad"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_margin="8dp"
-                android:background="@drawable/emotion_button_background"
-                android:scaleType="fitCenter"
-                android:src="@drawable/muytriste" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/how_was_your_day"
+                android:textSize="20sp"
+                android:textColor="@color/pastel_yellow"
+                android:fontFamily="@font/fuente"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <!-- Botones de emociones -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/emotion_happy"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/emotion_button_background"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/muyfeliz" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/emotion_smile"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/emotion_button_background"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/feliz" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/emotion_neutral"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/emotion_button_background"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/normal" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/emotion_sad"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/emotion_button_background"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/triste" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/emotion_verysad"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/emotion_button_background"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/muytriste" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-    <!-- Repeat for each section like Weather, People, Relationship, etc. -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@drawable/rounded_corner_background"
-        android:layout_marginBottom="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Weather"
-            android:textSize="20sp"
-            android:textColor="@color/pastel_yellow"
-            android:fontFamily="@font/fuente"
-            android:layout_gravity="start"
-            android:layout_marginBottom="8dp"/>
-
+        <!-- Repeat for each section like Weather, People, Relationship, etc. -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/rounded_corner_background"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_horizontal">
 
-            <!-- Repeat for each weather icon
-            <ImageButton
-                android:id="@+id/weather_sunny"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_margin="8dp"
-                android:background="@null"
-                android:src="@drawable/ic_sunny" />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/weather"
+                android:textSize="20sp"
+                android:textColor="@color/pastel_yellow"
+                android:fontFamily="@font/fuente"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <!-- Repeat for each weather icon-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/weather_sunny"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/soleado" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sunny"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/weather_cloudy"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/nublado" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cloudy"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/weather_rainy"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/lluvia" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rainy"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/weather_windy"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/viento" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Windy"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/weather_snowy"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/nieve" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Snowy"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-    <!-- Meals Section -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@drawable/rounded_corner_background"
-        android:layout_marginBottom="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Meals"
-            android:textSize="20sp"
-            android:textColor="@color/pastel_yellow"
-            android:fontFamily="@font/fuente"
-            android:layout_gravity="start"
-            android:layout_marginBottom="8dp"/>
-
+        <!-- Meals Section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/rounded_corner_background"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_horizontal">
 
-            <!-- Repeat for each meal icon
-            <ImageButton
-                android:id="@+id/meal_breakfast"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_margin="8dp"
-                android:background="@null"
-                android:src="@drawable/ic_breakfast" />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/meals"
+                android:textSize="20sp"
+                android:textColor="@color/pastel_yellow"
+                android:fontFamily="@font/fuente"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <!-- Repeat for each meal icon
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/meal_breakfast"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:src="@drawable/ic_breakfast" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Breakfast"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>-->
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-    <!-- Health Section -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@drawable/rounded_corner_background"
-        android:layout_marginBottom="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Health"
-            android:textSize="20sp"
-            android:textColor="@color/pastel_yellow"
-            android:fontFamily="@font/fuente"
-            android:layout_gravity="start"
-            android:layout_marginBottom="8dp"/>
-
+        <!-- Health Section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/rounded_corner_background"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_horizontal">
 
-            <!-- Repeat for each health icon
-            <ImageButton
-                android:id="@+id/health_sick"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_margin="8dp"
-                android:background="@null"
-                android:src="@drawable/ic_sick" />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/health"
+                android:textSize="20sp"
+                android:textColor="@color/pastel_yellow"
+                android:fontFamily="@font/fuente"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <!-- Repeat for each health icon
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/health_sick"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:src="@drawable/ic_sick" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sick"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>-->
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-    <!-- Emotions Section -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@drawable/rounded_corner_background"
-        android:layout_marginBottom="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Emotions"
-            android:textSize="20sp"
-            android:textColor="@color/pastel_yellow"
-            android:fontFamily="@font/fuente"
-            android:layout_gravity="start"
-            android:layout_marginBottom="8dp"/>
-
-        <GridLayout
+        <!-- Emotions Section -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:rowCount="4"
-            android:columnCount="4"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/rounded_corner_background"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_horizontal">
 
-            <!-- Repeat for each emotion icon
-            <ImageButton
-                android:id="@+id/emotion_excited"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_margin="8dp"
-                android:background="@null"
-                android:src="@drawable/ic_excited" />-->
-        </GridLayout>
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/emotions"
+                android:textSize="20sp"
+                android:textColor="@color/pastel_yellow"
+                android:fontFamily="@font/fuente"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"/>
 
-    <!-- Sleep Section -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@drawable/rounded_corner_background"
-        android:layout_marginBottom="16dp">
+            <GridLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:rowCount="4"
+                android:columnCount="4"
+                android:orientation="horizontal"
+                android:gravity="center">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sleep"
-            android:textSize="20sp"
-            android:textColor="@color/pastel_yellow"
-            android:fontFamily="@font/fuente"
-            android:layout_gravity="start"
-            android:layout_marginBottom="8dp"/>
+                <!-- Repeat for each emotion icon-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/emotion_inlove"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/enamorado" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="In Love"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/emotion_celebrating"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/celebrando" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Celebrating"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/emotion_relax"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/relajado" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Relax"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/emotion_proud"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/orgulloso" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Proud"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/emotion_tired"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/cansado" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tired"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/emotion_anxious"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ansioso" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Anxious"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/emotion_crying"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/llorando" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Crying"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/emotion_mad"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/enfadado" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mad"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+            </GridLayout>
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/sleep_input"
+        <!-- Sleep Section -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Record your sleep..."
-            android:background="@drawable/edit_text_background"
-            android:padding="8dp"
-            android:textColor="@color/pastel_yellow"
-            android:textColorHint="@color/pastel_yellow"
-            android:fontFamily="@font/fuente"/>
-    </LinearLayout>
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/rounded_corner_background"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_horizontal">
 
-    <!-- Note Section -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@drawable/rounded_corner_background"
-        android:layout_marginBottom="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sleep"
+                android:textSize="20sp"
+                android:textColor="@color/pastel_yellow"
+                android:fontFamily="@font/fuente"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Today's note"
-            android:textSize="20sp"
-            android:textColor="@color/pastel_yellow"
-            android:fontFamily="@font/fuente"
-            android:layout_gravity="start"
-            android:layout_marginBottom="8dp"/>
+            <EditText
+                android:id="@+id/sleep_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/record_your_sleep"
+                android:background="@drawable/edit_text_background"
+                android:padding="8dp"
+                android:textColor="@color/pastel_yellow"
+                android:textColorHint="@color/pastel_yellow"
+                android:fontFamily="@font/fuente"
+                android:focusable="false"
+                android:clickable="true"/>
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/note_input"
+        <!-- Note Section -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Write here..."
-            android:background="@drawable/edit_text_background"
-            android:padding="8dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            android:fontFamily="@font/fuente"/>
-    </LinearLayout>
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/rounded_corner_background"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_horizontal">
 
-    <!-- Photo Section -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@drawable/rounded_corner_background"
-        android:layout_marginBottom="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/today_s_note"
+                android:textSize="20sp"
+                android:textColor="@color/pastel_yellow"
+                android:fontFamily="@font/fuente"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Today's photo"
-            android:textSize="20sp"
-            android:textColor="@color/pastel_yellow"
-            android:fontFamily="@font/fuente"
-            android:layout_gravity="start"
-            android:layout_marginBottom="8dp"/>
+            <EditText
+                android:id="@+id/note_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/write_here"
+                android:background="@drawable/edit_text_background"
+                android:padding="8dp"
+                android:textColor="@color/pastel_yellow"
+                android:textColorHint="@color/pastel_yellow"
+                android:fontFamily="@font/fuente"/>
+        </LinearLayout>
 
-        <FrameLayout
+        <!-- Photo Section -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/photo_background"
-            android:gravity="center">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/rounded_corner_background"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_horizontal">
 
-            <!--<ImageButton
-                android:id="@+id/add_photo_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@null"
-                android:src="@drawable/ic_add_photo" />-->
-        </FrameLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/today_s_photo"
+                android:textSize="20sp"
+                android:textColor="@color/pastel_yellow"
+                android:fontFamily="@font/fuente"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@drawable/photo_background"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/add_photo_button"
+                    android:layout_gravity="center"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@null"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_add_photo" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <!-- Done Button -->
+        <Button
+            android:id="@+id/done_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/done"
+            android:background="@drawable/button_rounded"
+            android:textColor="@color/pastel_yellow"
+            android:textSize="19sp"
+            android:fontFamily="@font/fuente"
+            android:padding="16dp" />
     </LinearLayout>
-
-    <!-- Done Button -->
-    <Button
-        android:id="@+id/done_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Done"
-        android:background="@color/pastel_yellow"
-        android:textColor="@android:color/white"
-        android:fontFamily="@font/fuente"
-        android:padding="16dp" />
-
-</LinearLayout>
+</ScrollView>

@@ -8,12 +8,12 @@
 
     <ImageView
         android:id="@+id/emotion_image"
-        android:layout_width="40dp"
-        android:layout_height="51dp"
+        android:layout_width="31dp"
+        android:layout_height="45dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/emotion"
         android:scaleType="fitCenter"
-        android:src="@drawable/normal" />
+        android:src="@drawable/nada" />
 
     <TextView
         android:id="@+id/day_text"

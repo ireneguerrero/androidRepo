@@ -11,4 +11,17 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="time_asleep_format">Time asleep %1$d h %2$d m</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign up</string>
+    <string name="done">Done</string>
+    <string name="write_here">Write here...</string>
+    <string name="today_s_note">Today\'s note</string>
+    <string name="record_your_sleep">Record your sleep...</string>
+    <string name="sleep">Sleep</string>
+    <string name="how_was_your_day">How was your day?</string>
+    <string name="weather">Weather</string>
+    <string name="meals">Meals</string>
+    <string name="health">Health</string>
+    <string name="emotions">Emotions</string>
+    <string name="today_s_photo">Today\'s photo</string>
 </resources>
