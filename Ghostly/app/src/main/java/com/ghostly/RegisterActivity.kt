@@ -85,6 +85,19 @@ class RegisterActivity : AppCompatActivity() {
             findViewById<ImageButton>(R.id.weather_snowy)
         )
 
+        val mealsButtons = listOf(
+            findViewById<ImageButton>(R.id.meal_breakfast),
+            findViewById<ImageButton>(R.id.meal_lunch),
+            findViewById<ImageButton>(R.id.meal_dinner)
+        )
+
+        val healthButtons = listOf(
+            findViewById<ImageButton>(R.id.health_sick),
+            findViewById<ImageButton>(R.id.health_doctor),
+            findViewById<ImageButton>(R.id.health_medication),
+            findViewById<ImageButton>(R.id.health_period)
+        )
+
         val emotionButtons = listOf(
             findViewById<ImageButton>(R.id.emotion_inlove),
             findViewById<ImageButton>(R.id.emotion_celebrating),
@@ -101,6 +114,8 @@ class RegisterActivity : AppCompatActivity() {
 
         // Configuración de selección múltiple para otras secciones
         setupMultiSelection(weatherButtons, selectedWeather)
+        setupMultiSelection(mealsButtons, selectedMeals)
+        setupMultiSelection(healthButtons, selectedHealth)
         setupMultiSelection(emotionButtons, selectedEmotions)
 
         // Repite la configuración para otras secciones como Meals y Health

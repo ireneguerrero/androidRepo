@@ -311,7 +311,6 @@
                 android:gravity="center">
 
                 <!-- Repeat for each meal icon -->
-                <!-- Example for breakfast
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -323,7 +322,8 @@
                         android:layout_height="48dp"
                         android:layout_margin="8dp"
                         android:background="@null"
-                        android:src="@drawable/ic_breakfast" />
+                        android:scaleType="centerInside"
+                        android:src="@drawable/desayuno" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -331,8 +331,49 @@
                         android:textColor="@color/pastel_yellow"
                         android:fontFamily="@font/fuente"
                         android:textSize="12sp"/>
-                </LinearLayout>-->
-                <!-- Repeat similarly for other meal icons -->
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/meal_lunch"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/comida" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lunch"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/meal_dinner"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/cena" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dinner"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -363,7 +404,6 @@
                 android:gravity="center">
 
                 <!-- Repeat for each health icon -->
-                <!-- Example for sick
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -375,7 +415,8 @@
                         android:layout_height="48dp"
                         android:layout_margin="8dp"
                         android:background="@null"
-                        android:src="@drawable/ic_sick" />
+                        android:scaleType="centerInside"
+                        android:src="@drawable/enfermo" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -383,8 +424,70 @@
                         android:textColor="@color/pastel_yellow"
                         android:fontFamily="@font/fuente"
                         android:textSize="12sp"/>
-                </LinearLayout>-->
-                <!-- Repeat similarly for other health icons -->
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/health_doctor"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/doctor" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Doctor"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/health_medication"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/medicacion" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Medication"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/health_period"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        android:background="@null"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/regla" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Period"
+                        android:textColor="@color/pastel_yellow"
+                        android:fontFamily="@font/fuente"
+                        android:textSize="12sp"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
