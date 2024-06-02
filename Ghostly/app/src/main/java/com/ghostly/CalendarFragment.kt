@@ -31,8 +31,6 @@ class CalendarFragment : Fragment() {
         super.onAttach(context)
         arguments?.let {
             dayList = it.getParcelableArrayList("DAY_LIST") ?: emptyList()
-
-            Log.d("CalendarFragment", "Received day list with ${dayList.size} days")
         }
     }
 

@@ -44,6 +44,12 @@
                 android:src="@drawable/ic_edit" />
         </RelativeLayout>
 
+        <FrameLayout
+            android:id="@+id/calendar_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -304,7 +310,8 @@
                 android:orientation="horizontal"
                 android:gravity="center">
 
-                <!-- Repeat for each meal icon
+                <!-- Repeat for each meal icon -->
+                <!-- Example for breakfast
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -325,6 +332,7 @@
                         android:fontFamily="@font/fuente"
                         android:textSize="12sp"/>
                 </LinearLayout>-->
+                <!-- Repeat similarly for other meal icons -->
             </LinearLayout>
         </LinearLayout>
 
@@ -354,7 +362,8 @@
                 android:orientation="horizontal"
                 android:gravity="center">
 
-                <!-- Repeat for each health icon
+                <!-- Repeat for each health icon -->
+                <!-- Example for sick
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -375,6 +384,7 @@
                         android:fontFamily="@font/fuente"
                         android:textSize="12sp"/>
                 </LinearLayout>-->
+                <!-- Repeat similarly for other health icons -->
             </LinearLayout>
         </LinearLayout>
 
@@ -670,14 +680,22 @@
                 android:background="@drawable/photo_background"
                 android:gravity="center">
 
+                <ImageView
+                    android:id="@+id/photo_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"/>
+
                 <ImageButton
                     android:id="@+id/add_photo_button"
-                    android:layout_gravity="center"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
+                    android:layout_gravity="center"
                     android:background="@null"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_add_photo" />
+                    android:src="@drawable/ic_add_photo"
+                    android:visibility="visible"/>
             </FrameLayout>
         </LinearLayout>
 

@@ -1,13 +1,18 @@
 package com.ghostly
 
+import android.app.Activity
 import android.app.TimePickerDialog
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
+import android.provider.MediaStore
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import java.io.InputStream
+import java.text.SimpleDateFormat
 import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
@@ -26,6 +31,11 @@ class RegisterActivity : AppCompatActivity() {
     private var wakeTimeHour: Int = 8
     private var wakeTimeMinute: Int = 30
 
+    private lateinit var addPhotoButton: ImageButton
+    private lateinit var photoPreview: ImageView
+
+    private lateinit var dateTextView: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -34,6 +44,19 @@ class RegisterActivity : AppCompatActivity() {
         selectedMeals = mutableSetOf()
         selectedHealth = mutableSetOf()
         selectedEmotions = mutableSetOf()
+
+        // Inicializar vistas de foto
+        addPhotoButton = findViewById(R.id.add_photo_button)
+        photoPreview = findViewById(R.id.photo_preview)
+        dateTextView = findViewById(R.id.date_text)
+
+        addPhotoButton.setOnClickListener {
+            openGallery()
+        }
+
+        photoPreview.setOnClickListener {
+            openGallery()
+        }
 
         val sleepInput = findViewById<EditText>(R.id.sleep_input)
         sleepInput.setOnClickListener {
@@ -81,6 +104,44 @@ class RegisterActivity : AppCompatActivity() {
         setupMultiSelection(emotionButtons, selectedEmotions)
 
         // Repite la configuración para otras secciones como Meals y Health
+
+        // Obtener la fecha seleccionada del intent
+        val selectedDay = intent.getIntExtra("SELECTED_DAY", -1)
+        val selectedMonth = intent.getIntExtra("SELECTED_MONTH", -1)
+
+        if (selectedDay != -1 && selectedMonth != -1) {
+            val selectedDate = Calendar.getInstance()
+            selectedDate.set(Calendar.DAY_OF_MONTH, selectedDay)
+            selectedDate.set(Calendar.MONTH, selectedMonth)
+            dateTextView.text = formatDate(selectedDate.time)
+        } else {
+            // Mostrar la fecha actual si no hay una fecha seleccionada
+            val currentDate = Date()
+            dateTextView.text = formatDate(currentDate)
+        }
+    }
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+            val selectedImageUri: Uri? = data?.data
+            if (selectedImageUri != null) {
+                try {
+                    val inputStream: InputStream? = contentResolver.openInputStream(selectedImageUri)
+                    val bitmap: Bitmap = BitmapFactory.decodeStream(inputStream)
+                    photoPreview.setImageBitmap(bitmap)
+                    photoPreview.visibility = ImageView.VISIBLE
+                    addPhotoButton.visibility = ImageView.GONE
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
     }
 
     private fun showSleepTimePickerDialog() {
@@ -88,29 +149,24 @@ class RegisterActivity : AppCompatActivity() {
         val bedTime = dialogView.findViewById<TextView>(R.id.bed_time)
         val wakeTime = dialogView.findViewById<TextView>(R.id.wake_time)
         val timeAsleep = dialogView.findViewById<TextView>(R.id.time_asleep)
+        val timePicker = dialogView.findViewById<TimePicker>(R.id.time_picker)
 
         bedTime.text = String.format("%02d:%02d", bedTimeHour, bedTimeMinute)
         wakeTime.text = String.format("%02d:%02d", wakeTimeHour, wakeTimeMinute)
         updateSleepDuration(bedTimeHour, bedTimeMinute, wakeTimeHour, wakeTimeMinute, timeAsleep)
 
-        bedTime.setOnClickListener {
-            val timePickerDialog = TimePickerDialog(this, { _, hour, minute ->
-                bedTimeHour = hour
-                bedTimeMinute = minute
-                bedTime.text = String.format("%02d:%02d", hour, minute)
-                updateSleepDuration(bedTimeHour, bedTimeMinute, wakeTimeHour, wakeTimeMinute, timeAsleep)
-            }, bedTimeHour, bedTimeMinute, false)
-            timePickerDialog.show()
+        dialogView.findViewById<Button>(R.id.set_bed_time).setOnClickListener {
+            bedTimeHour = timePicker.hour
+            bedTimeMinute = timePicker.minute
+            bedTime.text = String.format("%02d:%02d", bedTimeHour, bedTimeMinute)
+            updateSleepDuration(bedTimeHour, bedTimeMinute, wakeTimeHour, wakeTimeMinute, timeAsleep)
         }
 
-        wakeTime.setOnClickListener {
-            val timePickerDialog = TimePickerDialog(this, { _, hour, minute ->
-                wakeTimeHour = hour
-                wakeTimeMinute = minute
-                wakeTime.text = String.format("%02d:%02d", hour, minute)
-                updateSleepDuration(bedTimeHour, bedTimeMinute, wakeTimeHour, wakeTimeMinute, timeAsleep)
-            }, wakeTimeHour, wakeTimeMinute, false)
-            timePickerDialog.show()
+        dialogView.findViewById<Button>(R.id.set_wake_time).setOnClickListener {
+            wakeTimeHour = timePicker.hour
+            wakeTimeMinute = timePicker.minute
+            wakeTime.text = String.format("%02d:%02d", wakeTimeHour, wakeTimeMinute)
+            updateSleepDuration(bedTimeHour, bedTimeMinute, wakeTimeHour, wakeTimeMinute, timeAsleep)
         }
 
         val dialog = AlertDialog.Builder(this)
@@ -178,5 +234,14 @@ class RegisterActivity : AppCompatActivity() {
                 button.setBackgroundResource(0)
             }
         }
+    }
+
+    private fun formatDate(date: Date): String {
+        val format = SimpleDateFormat("MMMM dd", Locale.getDefault())
+        return format.format(date)
+    }
+
+    companion object {
+        private const val REQUEST_CODE_PICK_IMAGE = 1001
     }
 }

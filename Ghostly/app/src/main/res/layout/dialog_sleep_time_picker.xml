@@ -19,6 +19,7 @@
             android:text="02:20 AM"
             android:textColor="@color/pastel_yellow"
             android:textSize="18sp"
+            android:fontFamily="@font/fuente"
             android:layout_alignParentStart="true"
             android:layout_marginStart="16dp" />
 
@@ -29,14 +30,61 @@
             android:text="08:30 AM"
             android:textColor="@color/pastel_yellow"
             android:textSize="18sp"
+            android:fontFamily="@font/fuente"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="16dp" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TimePicker
+            android:id="@+id/time_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:timePickerMode="clock"
+            android:background="@null" />
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="16dp">
+
+        <Button
+            android:id="@+id/set_bed_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_rounded"
+            android:text="Set Bed Time"
+            android:fontFamily="@font/fuente"
+            android:textSize="18sp"
+            android:textColor="@color/pastel_yellow"
+            android:layout_gravity="center"
+            android:padding="16dp" />
+
+        <Button
+            android:id="@+id/set_wake_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_rounded"
+            android:text="Set Wake Time"
+            android:fontFamily="@font/fuente"
+            android:textSize="18sp"
+            android:textColor="@color/pastel_yellow"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center">
 
@@ -46,9 +94,11 @@
             android:layout_height="wrap_content"
             android:text="Time asleep 6h 10m"
             android:textColor="@color/pastel_yellow"
-            android:textSize="18sp"
+            android:fontFamily="@font/fuente"
+            android:textSize="25sp"
             android:layout_gravity="center"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"/>
     </LinearLayout>
 
     <Button
@@ -57,6 +107,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_rounded"
         android:text="Done"
+        android:fontFamily="@font/fuente"
+        android:textSize="18sp"
         android:textColor="@color/pastel_yellow"
         android:layout_gravity="center"
         android:padding="16dp" />
