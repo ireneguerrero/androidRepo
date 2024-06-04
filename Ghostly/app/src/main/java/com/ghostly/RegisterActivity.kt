@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.io.InputStream
 import java.text.SimpleDateFormat
@@ -316,8 +317,13 @@ class RegisterActivity : AppCompatActivity() {
     private fun saveDataToFirestore() {
         val suenio = sleep_input.text.toString()
         val texto = note_input.text.toString()
-        selectedMonth+=1
+        selectedMonth += 1
         val dateString = "$selectedDay/$selectedMonth/$selectedYear"
+
+        // Obtener el usuario actual
+        val user = FirebaseAuth.getInstance().currentUser
+        val userId = user?.uid ?: "unknown"
+
         val data = hashMapOf(
             "numeroDia" to numeroDia,
             "numeroTiempo" to numeroTiempo,
@@ -326,7 +332,8 @@ class RegisterActivity : AppCompatActivity() {
             "numeroEmociones" to numeroEmociones,
             "texto" to texto,
             "suenio" to suenio,
-            "fecha" to dateString
+            "fecha" to dateString,
+            "usuario" to userId
         )
 
         db.collection("Registro")
