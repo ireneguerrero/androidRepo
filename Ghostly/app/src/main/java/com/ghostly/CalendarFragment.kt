@@ -1,8 +1,6 @@
 package com.ghostly
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,25 +10,18 @@ import androidx.recyclerview.widget.RecyclerView
 
 class CalendarFragment : Fragment() {
 
-    private lateinit var calendarRecyclerView: RecyclerView
     private lateinit var dayList: List<DayModel>
     private lateinit var onDayClickListener: (DayModel) -> Unit
 
     companion object {
-        fun newInstance(dayList: List<DayModel>, listener: (DayModel) -> Unit): CalendarFragment {
-            val fragment = CalendarFragment()
-            fragment.setOnDayClickListener(listener)
-            val args = Bundle()
-            args.putParcelableArrayList("DAY_LIST", ArrayList(dayList))
-            fragment.arguments = args
-            return fragment
-        }
-    }
+        private const val ARG_DAY_LIST = "day_list"
+        private const val ARG_ON_DAY_CLICK_LISTENER = "on_day_click_listener"
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        arguments?.let {
-            dayList = it.getParcelableArrayList("DAY_LIST") ?: emptyList()
+        fun newInstance(dayList: List<DayModel>, onDayClickListener: (DayModel) -> Unit): CalendarFragment {
+            val fragment = CalendarFragment()
+            fragment.dayList = dayList
+            fragment.onDayClickListener = onDayClickListener
+            return fragment
         }
     }
 
@@ -39,13 +30,9 @@ class CalendarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_calendar, container, false)
-        calendarRecyclerView = view.findViewById(R.id.calendar_recycler_view)
-        calendarRecyclerView.layoutManager = GridLayoutManager(context, 7)
-        calendarRecyclerView.adapter = CalendarAdapter(dayList, onDayClickListener)
+        val recyclerView: RecyclerView = view.findViewById(R.id.calendar_recycler_view)
+        recyclerView.layoutManager = GridLayoutManager(context, 7)
+        recyclerView.adapter = CalendarAdapter(dayList, onDayClickListener)
         return view
-    }
-
-    fun setOnDayClickListener(listener: (DayModel) -> Unit) {
-        onDayClickListener = listener
     }
 }

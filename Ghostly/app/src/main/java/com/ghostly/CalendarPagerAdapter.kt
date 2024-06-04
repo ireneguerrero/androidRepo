@@ -15,9 +15,7 @@ class CalendarPagerAdapter(
     override fun createFragment(position: Int): Fragment {
         val monthOffset = position - (Int.MAX_VALUE / 2)
         val dayList = initializeDayList(monthOffset)
-        return CalendarFragment.newInstance(dayList) { day ->
-            onDayClickListener(day)
-        }
+        return CalendarFragment.newInstance(dayList, onDayClickListener)
     }
 
     private fun initializeDayList(monthOffset: Int): List<DayModel> {
@@ -34,8 +32,10 @@ class CalendarPagerAdapter(
         // Determine the number of days in the current month
         val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
 
-        // Add empty days at the start if the month doesn't start on Monday
-        for (i in 1 until (firstDayOfWeek - Calendar.MONDAY + 7) % 7) {
+        // Add empty days at the start if the month doesn't start on Sunday
+        val emptyDays = if (firstDayOfWeek == Calendar.SUNDAY) 6 else firstDayOfWeek - 2
+
+        for (i in 0 until emptyDays) {
             days.add(DayModel(0, 0, 0, 0)) // Empty day
         }
 

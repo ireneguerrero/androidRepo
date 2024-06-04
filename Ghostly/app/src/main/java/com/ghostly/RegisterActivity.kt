@@ -1,7 +1,6 @@
 package com.ghostly
 
 import android.app.Activity
-import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -12,7 +11,10 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -48,17 +50,29 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var dateTextView: TextView
 
     private lateinit var db: FirebaseFirestore
+    private lateinit var storage: FirebaseStorage
+    private lateinit var storageReference: StorageReference
 
     private var selectedDay = -1
     private var selectedMonth = -1
     private var selectedYear = -1
+    private var photoUri: Uri? = null
+
+    private lateinit var auth: FirebaseAuth
+    private var currentUser: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        // Inicializar Firestore
+        // Inicializar Firebase Auth
+        auth = FirebaseAuth.getInstance()
+        currentUser = auth.currentUser
+
+        // Inicializar Firestore y Storage
         db = FirebaseFirestore.getInstance()
+        storage = FirebaseStorage.getInstance()
+        storageReference = storage.reference
 
         selectedWeather = mutableSetOf()
         selectedMeals = mutableSetOf()
@@ -95,8 +109,12 @@ class RegisterActivity : AppCompatActivity() {
         val doneButton = findViewById<Button>(R.id.done_button)
         doneButton.setOnClickListener {
             // Lógica para guardar los datos en Firestore y volver al calendario
-            saveDataToFirestore()
-            finish() // O la lógica que necesites para volver al calendario
+            if (currentUser != null) {
+                saveDataToFirestore()
+                finish() // O la lógica que necesites para volver al calendario
+            } else {
+                Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show()
+            }
         }
 
         val dayEmotionButtons = listOf(
@@ -174,11 +192,10 @@ class RegisterActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_PICK_IMAGE && resultCode == Activity.RESULT_OK) {
-            val selectedImageUri: Uri? = data?.data
-            if (selectedImageUri != null) {
+            photoUri = data?.data
+            if (photoUri != null) {
                 try {
-                    val inputStream: InputStream? =
-                        contentResolver.openInputStream(selectedImageUri)
+                    val inputStream: InputStream? = contentResolver.openInputStream(photoUri!!)
                     val bitmap: Bitmap = BitmapFactory.decodeStream(inputStream)
                     photoPreview.setImageBitmap(bitmap)
                     photoPreview.visibility = ImageView.VISIBLE
@@ -264,10 +281,10 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun setupSingleSelection(buttons: List<ImageButton>) {
-        var contador=0
+        var contador = 0
         buttons.forEach { button ->
             button.setOnClickListener {
-                numeroDia=contador
+                numeroDia = contador
                 buttons.forEach { it.isSelected = false }
                 button.isSelected = true
                 selectedDayEmotion = button.id
@@ -277,7 +294,11 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupMultiSelection(buttons: List<ImageButton>, selectedSet: MutableSet<Int>, listaNumerica: MutableList<Int>) {
+    private fun setupMultiSelection(
+        buttons: List<ImageButton>,
+        selectedSet: MutableSet<Int>,
+        listaNumerica: MutableList<Int>
+    ) {
         buttons.forEachIndexed { index, button ->
             button.setOnClickListener {
                 if (selectedSet.contains(button.id)) {
@@ -319,30 +340,61 @@ class RegisterActivity : AppCompatActivity() {
         val texto = note_input.text.toString()
         selectedMonth += 1
         val dateString = "$selectedDay/$selectedMonth/$selectedYear"
+        val userId = currentUser?.uid
 
-        // Obtener el usuario actual
-        val user = FirebaseAuth.getInstance().currentUser
-        val userId = user?.uid ?: "unknown"
+        if (photoUri != null) {
+            val photoRef = storageReference.child("photos/${UUID.randomUUID()}.jpg")
+            photoRef.putFile(photoUri!!)
+                .addOnSuccessListener { taskSnapshot ->
+                    photoRef.downloadUrl.addOnSuccessListener { uri ->
+                        val photoUrl = uri.toString()
+                        val data = hashMapOf(
+                            "userId" to userId,
+                            "numeroDia" to numeroDia,
+                            "numeroTiempo" to numeroTiempo,
+                            "numeroComida" to numeroComida,
+                            "numeroSalud" to numeroSalud,
+                            "numeroEmociones" to numeroEmociones,
+                            "texto" to texto,
+                            "suenio" to suenio,
+                            "fecha" to dateString,
+                            "photoUrl" to photoUrl
+                        )
 
-        val data = hashMapOf(
-            "numeroDia" to numeroDia,
-            "numeroTiempo" to numeroTiempo,
-            "numeroComida" to numeroComida,
-            "numeroSalud" to numeroSalud,
-            "numeroEmociones" to numeroEmociones,
-            "texto" to texto,
-            "suenio" to suenio,
-            "fecha" to dateString,
-            "usuario" to userId
-        )
+                        db.collection("Registro")
+                            .add(data)
+                            .addOnSuccessListener { documentReference ->
+                                Toast.makeText(this, "Datos guardados con éxito", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(this, "Error al guardar los datos", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error al subir la foto: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        } else {
+            val data = hashMapOf(
+                "userId" to userId,
+                "numeroDia" to numeroDia,
+                "numeroTiempo" to numeroTiempo,
+                "numeroComida" to numeroComida,
+                "numeroSalud" to numeroSalud,
+                "numeroEmociones" to numeroEmociones,
+                "texto" to texto,
+                "suenio" to suenio,
+                "fecha" to dateString
+            )
 
-        db.collection("Registro")
-            .add(data)
-            .addOnSuccessListener { documentReference ->
-                Toast.makeText(this, "Datos guardados con éxito", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Error al guardar los datos", Toast.LENGTH_SHORT).show()
-            }
+            db.collection("Registro")
+                .add(data)
+                .addOnSuccessListener { documentReference ->
+                    Toast.makeText(this, "Datos guardados con éxito", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error al guardar los datos", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 }
