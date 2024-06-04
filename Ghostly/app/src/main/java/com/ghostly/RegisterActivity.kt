@@ -1,12 +1,14 @@
 package com.ghostly
 
 import android.app.Activity
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -57,6 +59,8 @@ class RegisterActivity : AppCompatActivity() {
     private var selectedMonth = -1
     private var selectedYear = -1
     private var photoUri: Uri? = null
+    private var photoUrl: String? = null
+    private var documentId: String? = null
 
     private lateinit var auth: FirebaseAuth
     private var currentUser: FirebaseUser? = null
@@ -177,8 +181,8 @@ class RegisterActivity : AppCompatActivity() {
             selectedDate.set(Calendar.MONTH, selectedMonth)
             selectedDate.set(Calendar.YEAR, selectedYear)
             dateTextView.text = formatDate(selectedDate.time)
+            loadExistingData()
         } else {
-            // Mostrar la fecha actual si no hay una fecha seleccionada
             val currentDate = Date()
             dateTextView.text = formatDate(currentDate)
         }
@@ -195,7 +199,8 @@ class RegisterActivity : AppCompatActivity() {
             photoUri = data?.data
             if (photoUri != null) {
                 try {
-                    val inputStream: InputStream? = contentResolver.openInputStream(photoUri!!)
+                    val inputStream: InputStream? =
+                        contentResolver.openInputStream(photoUri!!)
                     val bitmap: Bitmap = BitmapFactory.decodeStream(inputStream)
                     photoPreview.setImageBitmap(bitmap)
                     photoPreview.visibility = ImageView.VISIBLE
@@ -281,16 +286,16 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun setupSingleSelection(buttons: List<ImageButton>) {
-        var contador = 0
-        buttons.forEach { button ->
+        buttons.forEachIndexed { index, button ->
             button.setOnClickListener {
-                numeroDia = contador
+                numeroDia = index
+                Log.d("RegisterActivity", "Emoción seleccionada (numeroDia): $numeroDia")
+
                 buttons.forEach { it.isSelected = false }
                 button.isSelected = true
                 selectedDayEmotion = button.id
                 updateButtonSelection(buttons, button)
             }
-            contador++
         }
     }
 
@@ -331,10 +336,6 @@ class RegisterActivity : AppCompatActivity() {
         return format.format(date)
     }
 
-    companion object {
-        private const val REQUEST_CODE_PICK_IMAGE = 1001
-    }
-
     private fun saveDataToFirestore() {
         val suenio = sleep_input.text.toString()
         val texto = note_input.text.toString()
@@ -342,59 +343,166 @@ class RegisterActivity : AppCompatActivity() {
         val dateString = "$selectedDay/$selectedMonth/$selectedYear"
         val userId = currentUser?.uid
 
+        Log.d("RegisterActivity", "Guardando emoción seleccionada (numeroDia): $numeroDia")
+
         if (photoUri != null) {
             val photoRef = storageReference.child("photos/${UUID.randomUUID()}.jpg")
             photoRef.putFile(photoUri!!)
                 .addOnSuccessListener { taskSnapshot ->
                     photoRef.downloadUrl.addOnSuccessListener { uri ->
                         val photoUrl = uri.toString()
-                        val data = hashMapOf(
-                            "userId" to userId,
-                            "numeroDia" to numeroDia,
-                            "numeroTiempo" to numeroTiempo,
-                            "numeroComida" to numeroComida,
-                            "numeroSalud" to numeroSalud,
-                            "numeroEmociones" to numeroEmociones,
-                            "texto" to texto,
-                            "suenio" to suenio,
-                            "fecha" to dateString,
-                            "photoUrl" to photoUrl
-                        )
-
-                        db.collection("Registro")
-                            .add(data)
-                            .addOnSuccessListener { documentReference ->
-                                Toast.makeText(this, "Datos guardados con éxito", Toast.LENGTH_SHORT).show()
-                            }
-                            .addOnFailureListener { e ->
-                                Toast.makeText(this, "Error al guardar los datos", Toast.LENGTH_SHORT).show()
-                            }
+                        saveDataToFirestore(userId, dateString, suenio, texto, photoUrl)
                     }
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Error al subir la foto: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error al subir la foto", Toast.LENGTH_SHORT).show()
                 }
         } else {
-            val data = hashMapOf(
-                "userId" to userId,
-                "numeroDia" to numeroDia,
-                "numeroTiempo" to numeroTiempo,
-                "numeroComida" to numeroComida,
-                "numeroSalud" to numeroSalud,
-                "numeroEmociones" to numeroEmociones,
-                "texto" to texto,
-                "suenio" to suenio,
-                "fecha" to dateString
-            )
+            saveDataToFirestore(userId, dateString, suenio, texto, photoUrl)
+        }
+    }
 
+    private fun saveDataToFirestore(userId: String?, dateString: String, suenio: String, texto: String, photoUrl: String?) {
+        val data = hashMapOf(
+            "userId" to userId,
+            "numeroDia" to numeroDia,
+            "numeroTiempo" to numeroTiempo,
+            "numeroComida" to numeroComida,
+            "numeroSalud" to numeroSalud,
+            "numeroEmociones" to numeroEmociones,
+            "texto" to texto,
+            "suenio" to suenio,
+            "fecha" to dateString,
+            "photoUrl" to photoUrl
+        )
+
+        if (documentId != null) {
+            db.collection("Registro").document(documentId!!)
+                .set(data)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Datos actualizados con éxito", Toast.LENGTH_SHORT).show()
+                    notifyCalendarFragment()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error al actualizar los datos", Toast.LENGTH_SHORT).show()
+                }
+        } else {
             db.collection("Registro")
                 .add(data)
                 .addOnSuccessListener { documentReference ->
                     Toast.makeText(this, "Datos guardados con éxito", Toast.LENGTH_SHORT).show()
+                    notifyCalendarFragment()
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "Error al guardar los datos", Toast.LENGTH_SHORT).show()
                 }
         }
+    }
+
+    private fun loadExistingData() {
+        val dateString = "$selectedDay/${selectedMonth + 1}/$selectedYear"
+        db.collection("Registro")
+            .whereEqualTo("fecha", dateString)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (!documents.isEmpty) {
+                    val document = documents.documents[0]
+                    documentId = document.id
+                    numeroDia = (document.getLong("numeroDia") ?: 0).toInt()
+                    numeroTiempo = (document.get("numeroTiempo") as List<Long>).map { it.toInt() }.toMutableList()
+                    numeroComida = (document.get("numeroComida") as List<Long>).map { it.toInt() }.toMutableList()
+                    numeroSalud = (document.get("numeroSalud") as List<Long>).map { it.toInt() }.toMutableList()
+                    numeroEmociones = (document.get("numeroEmociones") as List<Long>).map { it.toInt() }.toMutableList()
+                    note_input.setText(document.getString("texto") ?: "")
+                    sleep_input.setText(document.getString("suenio") ?: "")
+                    photoUrl = document.getString("photoUrl")
+
+                    updateSelections()
+
+                    if (!photoUrl.isNullOrEmpty()) {
+                        val photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(photoUrl!!)
+                        photoRef.getBytes(Long.MAX_VALUE).addOnSuccessListener { bytes ->
+                            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                            photoPreview.setImageBitmap(bitmap)
+                            photoPreview.visibility = ImageView.VISIBLE
+                            addPhotoButton.visibility = ImageView.GONE
+                        }.addOnFailureListener {
+                            // Error al cargar la foto
+                        }
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                // Manejar el error
+            }
+    }
+
+    private fun updateSelections() {
+        val dayEmotionButtons = listOf(
+            findViewById<ImageButton>(R.id.emotion_happy),
+            findViewById<ImageButton>(R.id.emotion_smile),
+            findViewById<ImageButton>(R.id.emotion_neutral),
+            findViewById<ImageButton>(R.id.emotion_sad),
+            findViewById<ImageButton>(R.id.emotion_verysad)
+        )
+
+        val weatherButtons = listOf(
+            findViewById<ImageButton>(R.id.weather_sunny),
+            findViewById<ImageButton>(R.id.weather_cloudy),
+            findViewById<ImageButton>(R.id.weather_rainy),
+            findViewById<ImageButton>(R.id.weather_windy),
+            findViewById<ImageButton>(R.id.weather_snowy)
+        )
+
+        val mealsButtons = listOf(
+            findViewById<ImageButton>(R.id.meal_breakfast),
+            findViewById<ImageButton>(R.id.meal_lunch),
+            findViewById<ImageButton>(R.id.meal_dinner)
+        )
+
+        val healthButtons = listOf(
+            findViewById<ImageButton>(R.id.health_sick),
+            findViewById<ImageButton>(R.id.health_doctor),
+            findViewById<ImageButton>(R.id.health_medication),
+            findViewById<ImageButton>(R.id.health_period)
+        )
+
+        val emotionButtons = listOf(
+            findViewById<ImageButton>(R.id.emotion_inlove),
+            findViewById<ImageButton>(R.id.emotion_celebrating),
+            findViewById<ImageButton>(R.id.emotion_relax),
+            findViewById<ImageButton>(R.id.emotion_proud),
+            findViewById<ImageButton>(R.id.emotion_tired),
+            findViewById<ImageButton>(R.id.emotion_anxious),
+            findViewById<ImageButton>(R.id.emotion_crying),
+            findViewById<ImageButton>(R.id.emotion_mad)
+        )
+
+        dayEmotionButtons[numeroDia].isSelected = true
+        updateButtonSelection(dayEmotionButtons, dayEmotionButtons[numeroDia])
+        updateMultiSelection(weatherButtons, numeroTiempo)
+        updateMultiSelection(mealsButtons, numeroComida)
+        updateMultiSelection(healthButtons, numeroSalud)
+        updateMultiSelection(emotionButtons, numeroEmociones)
+    }
+
+    private fun updateMultiSelection(buttons: List<ImageButton>, selections: List<Int>) {
+        buttons.forEachIndexed { index, button ->
+            button.isSelected = selections[index] == 1
+            if (button.isSelected) {
+                button.setBackgroundResource(R.drawable.selected_background)
+            } else {
+                button.setBackgroundResource(0)
+            }
+        }
+    }
+
+    private fun notifyCalendarFragment() {
+        val fragment = supportFragmentManager.findFragmentByTag("CalendarFragmentTag") as? CalendarFragment
+        fragment?.loadEmotionsForDays()
+    }
+
+    companion object {
+        private const val REQUEST_CODE_PICK_IMAGE = 1001
     }
 }
