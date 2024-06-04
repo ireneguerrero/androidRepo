@@ -3,8 +3,10 @@ package com.ghostly
 import android.os.Parcel
 import android.os.Parcelable
 
-data class DayModel(val day: Int, var emotion: Int) : Parcelable {
+data class DayModel(val day: Int, var emotion: Int, val month: Int, val year: Int) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readInt(),
+        parcel.readInt(),
         parcel.readInt(),
         parcel.readInt()
     )
@@ -12,6 +14,8 @@ data class DayModel(val day: Int, var emotion: Int) : Parcelable {
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(day)
         parcel.writeInt(emotion)
+        parcel.writeInt(month)
+        parcel.writeInt(year)
     }
 
     override fun describeContents(): Int {

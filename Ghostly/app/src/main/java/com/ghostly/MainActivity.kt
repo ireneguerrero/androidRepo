@@ -2,7 +2,6 @@ package com.ghostly
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +13,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var calendarViewPager: ViewPager2
     private lateinit var monthYearText: TextView
-    private var currentMonthOffset = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,25 +25,29 @@ class MainActivity : AppCompatActivity() {
             showRegisterDayDialog(day)
         }
         calendarViewPager.adapter = calendarPagerAdapter
-        val middlePosition = Int.MAX_VALUE / 2
-        calendarViewPager.setCurrentItem(middlePosition, false) // Coloca en el centro
+
+        // Posicionar en el mes actual al iniciar la aplicación
+        val initialPosition = Int.MAX_VALUE / 2
+        calendarViewPager.setCurrentItem(initialPosition, false)
+
+        // Actualizar el texto del mes y año
+        updateMonthYearText(0)
 
         calendarViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                currentMonthOffset = position - middlePosition
-                updateMonthYearText(currentMonthOffset)
+                val monthOffset = position - initialPosition
+                updateMonthYearText(monthOffset)
             }
         })
-
-        // Aseguramos que la vista inicial sea del mes actual
-        updateMonthYearText(0)
 
         val registerButton: ImageButton = findViewById(R.id.navigation_register)
         registerButton.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
+            // Añadir el día actual al intent
             val today = Calendar.getInstance()
             intent.putExtra("SELECTED_DAY", today.get(Calendar.DAY_OF_MONTH))
             intent.putExtra("SELECTED_MONTH", today.get(Calendar.MONTH))
+            intent.putExtra("SELECTED_YEAR", today.get(Calendar.YEAR))
             startActivity(intent)
         }
     }
@@ -55,7 +57,8 @@ class MainActivity : AppCompatActivity() {
             day.emotion = emotion
             val intent = Intent(this, RegisterActivity::class.java).apply {
                 putExtra("SELECTED_DAY", day.day)
-                putExtra("SELECTED_MONTH", getCurrentMonth())
+                putExtra("SELECTED_MONTH", day.month)
+                putExtra("SELECTED_YEAR", day.year)
                 putExtra("SELECTED_EMOTION", emotion)
             }
             startActivity(intent)
@@ -68,11 +71,5 @@ class MainActivity : AppCompatActivity() {
         calendar.add(Calendar.MONTH, monthOffset)
         val monthYearText = SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(calendar.time)
         findViewById<TextView>(R.id.month_year_text).text = monthYearText
-    }
-
-    private fun getCurrentMonth(): Int {
-        val calendar = Calendar.getInstance()
-        calendar.add(Calendar.MONTH, currentMonthOffset)
-        return calendar.get(Calendar.MONTH)
     }
 }

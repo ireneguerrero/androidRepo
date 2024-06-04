@@ -35,13 +35,13 @@ class CalendarPagerAdapter(
         val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
 
         // Add empty days at the start if the month doesn't start on Monday
-        for (i in 1 until (firstDayOfWeek - Calendar.MONDAY + 1) % 7) {
-            days.add(DayModel(0, 0)) // Empty day
+        for (i in 1 until (firstDayOfWeek - Calendar.MONDAY + 7) % 7) {
+            days.add(DayModel(0, 0, 0, 0)) // Empty day
         }
 
         // Add the days of the current month
         for (day in 1..daysInMonth) {
-            days.add(DayModel(day, R.drawable.nada))
+            days.add(DayModel(day, R.drawable.nada, calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR)))
         }
 
         return days

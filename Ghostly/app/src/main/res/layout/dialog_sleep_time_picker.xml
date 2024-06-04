@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="02:20 AM"
             android:textColor="@color/pastel_yellow"
-            android:textSize="18sp"
+            android:textSize="25sp"
             android:fontFamily="@font/fuente"
             android:layout_alignParentStart="true"
             android:layout_marginStart="16dp" />
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="08:30 AM"
             android:textColor="@color/pastel_yellow"
-            android:textSize="18sp"
+            android:textSize="25sp"
             android:fontFamily="@font/fuente"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="16dp" />

@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.firestore.FirebaseFirestore
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,27 +24,53 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var selectedEmotions: MutableSet<Int>
     private var selectedDayEmotion: Int? = null
 
+    private lateinit var numeroTiempo: MutableList<Int>
+    private lateinit var numeroComida: MutableList<Int>
+    private lateinit var numeroSalud: MutableList<Int>
+    private lateinit var numeroEmociones: MutableList<Int>
+    private var numeroDia: Int = 0
+
     private lateinit var bedTimeTextView: TextView
     private lateinit var wakeTimeTextView: TextView
     private lateinit var timeAsleepTextView: TextView
+    private lateinit var sleep_input: EditText
     private var bedTimeHour: Int = 2
     private var bedTimeMinute: Int = 20
     private var wakeTimeHour: Int = 8
     private var wakeTimeMinute: Int = 30
+
+    private lateinit var note_input: EditText
 
     private lateinit var addPhotoButton: ImageButton
     private lateinit var photoPreview: ImageView
 
     private lateinit var dateTextView: TextView
 
+    private lateinit var db: FirebaseFirestore
+
+    private var selectedDay = -1
+    private var selectedMonth = -1
+    private var selectedYear = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
+        // Inicializar Firestore
+        db = FirebaseFirestore.getInstance()
 
         selectedWeather = mutableSetOf()
         selectedMeals = mutableSetOf()
         selectedHealth = mutableSetOf()
         selectedEmotions = mutableSetOf()
+
+        numeroTiempo = mutableListOf(0, 0, 0, 0, 0)
+        numeroComida = mutableListOf(0, 0, 0)
+        numeroSalud = mutableListOf(0, 0, 0, 0)
+        numeroEmociones = mutableListOf(0, 0, 0, 0, 0, 0, 0, 0)
+
+        // Inicializar la nota
+        note_input = findViewById(R.id.note_input)
 
         // Inicializar vistas de foto
         addPhotoButton = findViewById(R.id.add_photo_button)
@@ -58,14 +85,16 @@ class RegisterActivity : AppCompatActivity() {
             openGallery()
         }
 
-        val sleepInput = findViewById<EditText>(R.id.sleep_input)
-        sleepInput.setOnClickListener {
+        // Inicializar las horas de sueño
+        sleep_input = findViewById<EditText>(R.id.sleep_input)
+        sleep_input.setOnClickListener {
             showSleepTimePickerDialog()
         }
 
         val doneButton = findViewById<Button>(R.id.done_button)
         doneButton.setOnClickListener {
-            // Lógica para guardar los datos y volver al calendario
+            // Lógica para guardar los datos en Firestore y volver al calendario
+            saveDataToFirestore()
             finish() // O la lógica que necesites para volver al calendario
         }
 
@@ -113,21 +142,21 @@ class RegisterActivity : AppCompatActivity() {
         setupSingleSelection(dayEmotionButtons)
 
         // Configuración de selección múltiple para otras secciones
-        setupMultiSelection(weatherButtons, selectedWeather)
-        setupMultiSelection(mealsButtons, selectedMeals)
-        setupMultiSelection(healthButtons, selectedHealth)
-        setupMultiSelection(emotionButtons, selectedEmotions)
-
-        // Repite la configuración para otras secciones como Meals y Health
+        setupMultiSelection(weatherButtons, selectedWeather, numeroTiempo)
+        setupMultiSelection(mealsButtons, selectedMeals, numeroComida)
+        setupMultiSelection(healthButtons, selectedHealth, numeroSalud)
+        setupMultiSelection(emotionButtons, selectedEmotions, numeroEmociones)
 
         // Obtener la fecha seleccionada del intent
-        val selectedDay = intent.getIntExtra("SELECTED_DAY", -1)
-        val selectedMonth = intent.getIntExtra("SELECTED_MONTH", -1)
+        selectedDay = intent.getIntExtra("SELECTED_DAY", -1)
+        selectedMonth = intent.getIntExtra("SELECTED_MONTH", -1)
+        selectedYear = intent.getIntExtra("SELECTED_YEAR", -1)
 
-        if (selectedDay != -1 && selectedMonth != -1) {
+        if (selectedDay != -1 && selectedMonth != -1 && selectedYear != -1) {
             val selectedDate = Calendar.getInstance()
             selectedDate.set(Calendar.DAY_OF_MONTH, selectedDay)
             selectedDate.set(Calendar.MONTH, selectedMonth)
+            selectedDate.set(Calendar.YEAR, selectedYear)
             dateTextView.text = formatDate(selectedDate.time)
         } else {
             // Mostrar la fecha actual si no hay una fecha seleccionada
@@ -147,7 +176,8 @@ class RegisterActivity : AppCompatActivity() {
             val selectedImageUri: Uri? = data?.data
             if (selectedImageUri != null) {
                 try {
-                    val inputStream: InputStream? = contentResolver.openInputStream(selectedImageUri)
+                    val inputStream: InputStream? =
+                        contentResolver.openInputStream(selectedImageUri)
                     val bitmap: Bitmap = BitmapFactory.decodeStream(inputStream)
                     photoPreview.setImageBitmap(bitmap)
                     photoPreview.visibility = ImageView.VISIBLE
@@ -174,14 +204,26 @@ class RegisterActivity : AppCompatActivity() {
             bedTimeHour = timePicker.hour
             bedTimeMinute = timePicker.minute
             bedTime.text = String.format("%02d:%02d", bedTimeHour, bedTimeMinute)
-            updateSleepDuration(bedTimeHour, bedTimeMinute, wakeTimeHour, wakeTimeMinute, timeAsleep)
+            updateSleepDuration(
+                bedTimeHour,
+                bedTimeMinute,
+                wakeTimeHour,
+                wakeTimeMinute,
+                timeAsleep
+            )
         }
 
         dialogView.findViewById<Button>(R.id.set_wake_time).setOnClickListener {
             wakeTimeHour = timePicker.hour
             wakeTimeMinute = timePicker.minute
             wakeTime.text = String.format("%02d:%02d", wakeTimeHour, wakeTimeMinute)
-            updateSleepDuration(bedTimeHour, bedTimeMinute, wakeTimeHour, wakeTimeMinute, timeAsleep)
+            updateSleepDuration(
+                bedTimeHour,
+                bedTimeMinute,
+                wakeTimeHour,
+                wakeTimeMinute,
+                timeAsleep
+            )
         }
 
         val dialog = AlertDialog.Builder(this)
@@ -197,7 +239,13 @@ class RegisterActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun updateSleepDuration(bedHour: Int, bedMinute: Int, wakeHour: Int, wakeMinute: Int, textView: TextView) {
+    private fun updateSleepDuration(
+        bedHour: Int,
+        bedMinute: Int,
+        wakeHour: Int,
+        wakeMinute: Int,
+        textView: TextView
+    ) {
         val bedTime = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, bedHour)
             set(Calendar.MINUTE, bedMinute)
@@ -215,24 +263,29 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun setupSingleSelection(buttons: List<ImageButton>) {
+        var contador=0
         buttons.forEach { button ->
             button.setOnClickListener {
+                numeroDia=contador
                 buttons.forEach { it.isSelected = false }
                 button.isSelected = true
                 selectedDayEmotion = button.id
                 updateButtonSelection(buttons, button)
             }
+            contador++
         }
     }
 
-    private fun setupMultiSelection(buttons: List<ImageButton>, selectedSet: MutableSet<Int>) {
-        buttons.forEach { button ->
+    private fun setupMultiSelection(buttons: List<ImageButton>, selectedSet: MutableSet<Int>, listaNumerica: MutableList<Int>) {
+        buttons.forEachIndexed { index, button ->
             button.setOnClickListener {
                 if (selectedSet.contains(button.id)) {
+                    listaNumerica[index] = 0
                     selectedSet.remove(button.id)
                     button.isSelected = false
                     button.setBackgroundResource(0) // Reset background when unselected
                 } else {
+                    listaNumerica[index] = 1
                     selectedSet.add(button.id)
                     button.isSelected = true
                     button.setBackgroundResource(R.drawable.selected_background) // Apply custom background when selected
@@ -252,11 +305,37 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun formatDate(date: Date): String {
-        val format = SimpleDateFormat("MMMM dd", Locale.getDefault())
+        val format = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
         return format.format(date)
     }
 
     companion object {
         private const val REQUEST_CODE_PICK_IMAGE = 1001
+    }
+
+    private fun saveDataToFirestore() {
+        val suenio = sleep_input.text.toString()
+        val texto = note_input.text.toString()
+        selectedMonth+=1
+        val dateString = "$selectedDay/$selectedMonth/$selectedYear"
+        val data = hashMapOf(
+            "numeroDia" to numeroDia,
+            "numeroTiempo" to numeroTiempo,
+            "numeroComida" to numeroComida,
+            "numeroSalud" to numeroSalud,
+            "numeroEmociones" to numeroEmociones,
+            "texto" to texto,
+            "suenio" to suenio,
+            "fecha" to dateString
+        )
+
+        db.collection("Registro")
+            .add(data)
+            .addOnSuccessListener { documentReference ->
+                Toast.makeText(this, "Datos guardados con éxito", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error al guardar los datos", Toast.LENGTH_SHORT).show()
+            }
     }
 }
