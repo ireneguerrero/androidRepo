@@ -24,4 +24,11 @@
     <string name="health">Health</string>
     <string name="emotions">Emotions</string>
     <string name="today_s_photo">Today\'s photo</string>
+    <string name="basic_analysis">Basic Analysis</string>
+    <string name="mood_bar">Mood Bar</string>
+    <string name="icon_ranking">Icon Ranking</string>
+    <string name="sleep_analysis">Sleep Analysis</string>
+    <string name="average_bedtime">Average Bedtime</string>
+    <string name="average_wakeup">Average Wakeup</string>
+    <string name="average_sleep">Average Sleep</string>
 </resources>

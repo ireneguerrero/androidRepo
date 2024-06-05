@@ -3,13 +3,12 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
-    android:layout_margin="4dp"
     android:padding="8dp">
 
     <ImageView
         android:id="@+id/emotion_image"
-        android:layout_width="31dp"
-        android:layout_height="45dp"
+        android:layout_width="36dp"
+        android:layout_height="43dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/emotion"
         android:scaleType="fitCenter"

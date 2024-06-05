@@ -13,10 +13,15 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var calendarViewPager: ViewPager2
     private lateinit var monthYearText: TextView
+    private var navigationStatisticsButton=findViewById<ImageButton>(R.id.navigation_statistics)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        navigationStatisticsButton.setOnClickListener {
+            val intent = Intent(this, StatisticsActivity::class.java)
+            startActivity(intent)
+        }
 
         monthYearText = findViewById(R.id.month_year_text)
         calendarViewPager = findViewById(R.id.calendar_view_pager)
@@ -72,4 +77,5 @@ class MainActivity : AppCompatActivity() {
         val monthYearText = SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(calendar.time)
         findViewById<TextView>(R.id.month_year_text).text = monthYearText
     }
+
 }
