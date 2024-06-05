@@ -2,6 +2,7 @@ package com.ghostly
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -13,15 +14,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var calendarViewPager: ViewPager2
     private lateinit var monthYearText: TextView
-    private var navigationStatisticsButton=findViewById<ImageButton>(R.id.navigation_statistics)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        navigationStatisticsButton.setOnClickListener {
-            val intent = Intent(this, StatisticsActivity::class.java)
-            startActivity(intent)
-        }
 
         monthYearText = findViewById(R.id.month_year_text)
         calendarViewPager = findViewById(R.id.calendar_view_pager)
