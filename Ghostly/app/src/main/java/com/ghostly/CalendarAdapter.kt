@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+//Adaptador para el RecyclerView del calendario
 class CalendarAdapter(
     private val days: List<DayModel>,
     private val onItemClick: (DayModel) -> Unit

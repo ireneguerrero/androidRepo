@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.DialogFragment
 
+//Muestra un cuadro de diálogo personalizado que permite a los usuarios seleccionar un rango de horas de sueño
 class SleepTimePickerDialogFragment : DialogFragment() {
 
     override fun onCreateView(

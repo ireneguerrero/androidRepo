@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import java.util.*
 
+//Adaptador para manejar la paginación de fragmentos de calendario dentro de un ViewPager2
 class CalendarPagerAdapter(
     activity: AppCompatActivity,
     private val onDayClickListener: (DayModel) -> Unit

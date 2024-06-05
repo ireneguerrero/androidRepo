@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 
+//Muestra un calendario con los días registrados y permite la selección de días
 class CalendarFragment : Fragment() {
 
     private lateinit var dayList: MutableList<DayModel>

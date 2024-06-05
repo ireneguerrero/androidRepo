@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 
+//Maneja el inicio de sesión con correo electrónico y Google, así como el registro de usuarios
 class LoginActivity : AppCompatActivity() {
 
     private val googleSignInRequestCode = 100

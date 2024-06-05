@@ -11,6 +11,7 @@ import android.view.WindowManager
 import android.widget.ImageButton
 import androidx.fragment.app.DialogFragment
 
+//Muestra un cuadro de diálogo personalizado que permite a los usuarios seleccionar una emoción para un día específico
 class RegisterDayDialogFragment(private val onEmotionSelected: (Int) -> Unit) : DialogFragment() {
 
     override fun onCreateView(

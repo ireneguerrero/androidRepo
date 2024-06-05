@@ -3,6 +3,7 @@ package com.ghostly
 import android.os.Parcel
 import android.os.Parcelable
 
+//Modelo de datos para representar un día en el calendario
 data class DayModel(val day: Int, var emotion: Int, val month: Int, val year: Int) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),

@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2
 import java.text.SimpleDateFormat
 import java.util.*
 
+//Clase principal que carga el fragmento del calendario
 class MainActivity : AppCompatActivity() {
 
     private lateinit var calendarViewPager: ViewPager2

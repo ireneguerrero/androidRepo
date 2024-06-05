@@ -21,6 +21,7 @@ import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
+//Maneja el registro de emociones, tiempo, comidas, salud y fotos para cada día
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var selectedWeather: MutableSet<Int>
