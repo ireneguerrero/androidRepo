@@ -7,7 +7,6 @@
     <string name="settings">Settings</string>
     <string name="emotion">Emotion</string>
     <string name="register">Register</string>
-    <string name="store">Store</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="time_asleep_format">Time asleep %1$d h %2$d m</string>
@@ -31,4 +30,10 @@
     <string name="average_bedtime">Average Bedtime</string>
     <string name="average_wakeup">Average Wakeup</string>
     <string name="average_sleep">Average Sleep</string>
+    <string name="happy">Muy feliz</string>
+    <string name="smile">Feliz</string>
+    <string name="neutral">Normal</string>
+    <string name="sad">Triste</string>
+    <string name="verysad">Muy triste</string>
+    <string name="calculator">Calculator</string>
 </resources>

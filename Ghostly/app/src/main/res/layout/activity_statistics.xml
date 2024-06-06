@@ -3,21 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_light_purple"
-    tools:context=".MainActivity">
+    tools:context=".StatisticsActivity">
 
     <TextView
         android:id="@+id/month_year_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="May 2024"
+        android:layout_marginTop="20dp"
         android:textSize="25sp"
         android:fontFamily="@font/fuente"
         android:textColor="@color/pastel_yellow" />
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/calendar_view_pager"
+        android:id="@+id/statistics_view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_below="@id/month_year_text"

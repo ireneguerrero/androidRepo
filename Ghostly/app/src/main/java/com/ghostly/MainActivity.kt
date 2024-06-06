@@ -2,7 +2,6 @@ package com.ghostly
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import java.text.SimpleDateFormat
 import java.util.*
 
-//Clase principal que carga el fragmento del calendario
+// Clase principal que carga el fragmento del calendario
 class MainActivity : AppCompatActivity() {
 
     private lateinit var calendarViewPager: ViewPager2
@@ -52,6 +51,18 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("SELECTED_YEAR", today.get(Calendar.YEAR))
             startActivity(intent)
         }
+
+        val statisticsButton: ImageButton = findViewById(R.id.navigation_statistics)
+        statisticsButton.setOnClickListener {
+            val intent = Intent(this, StatisticsActivity::class.java)
+            startActivity(intent)
+        }
+
+        val calculatorButton: ImageButton = findViewById(R.id.navigation_calculator)
+        calculatorButton.setOnClickListener {
+            val intent = Intent(this, HappinessCalculatorActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun showRegisterDayDialog(day: DayModel) {
@@ -74,5 +85,4 @@ class MainActivity : AppCompatActivity() {
         val monthYearText = SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(calendar.time)
         findViewById<TextView>(R.id.month_year_text).text = monthYearText
     }
-
 }

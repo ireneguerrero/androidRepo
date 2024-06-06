@@ -21,7 +21,7 @@ import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
-//Maneja el registro de emociones, tiempo, comidas, salud y fotos para cada día
+// Maneja el registro de emociones, tiempo, comidas, salud y fotos para cada día
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var selectedWeather: MutableSet<Int>
@@ -346,27 +346,34 @@ class RegisterActivity : AppCompatActivity() {
 
         Log.d("RegisterActivity", "Guardando emoción seleccionada (numeroDia): $numeroDia")
 
+        val calendar = Calendar.getInstance()
+        calendar.set(selectedYear, selectedMonth - 1, selectedDay) // Ajuste para Calendar
+        val month = calendar.get(Calendar.MONTH) + 1 // Los meses en Calendar van de 0 a 11, por eso se suma 1
+        val year = calendar.get(Calendar.YEAR)
+
         if (photoUri != null) {
             val photoRef = storageReference.child("photos/${UUID.randomUUID()}.jpg")
             photoRef.putFile(photoUri!!)
                 .addOnSuccessListener { taskSnapshot ->
                     photoRef.downloadUrl.addOnSuccessListener { uri ->
                         val photoUrl = uri.toString()
-                        saveDataToFirestore(userId, dateString, suenio, texto, photoUrl)
+                        saveDataToFirestore(userId, dateString, suenio, texto, photoUrl, month, year)
                     }
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "Error al subir la foto", Toast.LENGTH_SHORT).show()
                 }
         } else {
-            saveDataToFirestore(userId, dateString, suenio, texto, photoUrl)
+            saveDataToFirestore(userId, dateString, suenio, texto, photoUrl, month, year)
         }
     }
 
-    private fun saveDataToFirestore(userId: String?, dateString: String, suenio: String, texto: String, photoUrl: String?) {
+    private fun saveDataToFirestore(userId: String?, dateString: String, suenio: String, texto: String, photoUrl: String?, month: Int, year: Int) {
         val data = hashMapOf(
             "userId" to userId,
             "numeroDia" to numeroDia,
+            "month" to month,
+            "year" to year,
             "numeroTiempo" to numeroTiempo,
             "numeroComida" to numeroComida,
             "numeroSalud" to numeroSalud,

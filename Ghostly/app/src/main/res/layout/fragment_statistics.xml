@@ -1,0 +1,214 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_light_purple"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/fuente"
+            android:gravity="center"
+            android:text="@string/statistics"
+            android:textColor="@color/pastel_yellow"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/mid_light_purple"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/muyfeliz" />
+
+                <TextView
+                    android:id="@+id/happy_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/fuente"
+                    android:text="0 días"
+                    android:textSize="17sp"
+                    android:textColor="@color/pastel_yellow" />
+
+                <TextView
+                    android:id="@+id/happy_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/fuente"
+                    android:text="0.0%"
+                    android:textSize="17sp"
+                    android:textColor="@color/pastel_yellow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/feliz" />
+
+                <TextView
+                    android:id="@+id/smile_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/fuente"
+                    android:text="0 días"
+                    android:textSize="17sp"
+                    android:textColor="@color/pastel_yellow" />
+
+                <TextView
+                    android:id="@+id/smile_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/fuente"
+                    android:text="0.0%"
+                    android:textSize="17sp"
+                    android:textColor="@color/pastel_yellow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/normal" />
+
+                <TextView
+                    android:id="@+id/neutral_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/fuente"
+                    android:text="0 días"
+                    android:textSize="17sp"
+                    android:textColor="@color/pastel_yellow" />
+
+                <TextView
+                    android:id="@+id/neutral_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/fuente"
+                    android:text="0.0%"
+                    android:textSize="17sp"
+                    android:textColor="@color/pastel_yellow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/triste" />
+
+                <TextView
+                    android:id="@+id/sad_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/fuente"
+                    android:text="0 días"
+                    android:textSize="17sp"
+                    android:textColor="@color/pastel_yellow" />
+
+                <TextView
+                    android:id="@+id/sad_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/fuente"
+                    android:text="0.0%"
+                    android:textSize="17sp"
+                    android:textColor="@color/pastel_yellow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/muytriste" />
+
+                <TextView
+                    android:id="@+id/verysad_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/fuente"
+                    android:text="0 días"
+                    android:textSize="17sp"
+                    android:textColor="@color/pastel_yellow" />
+
+                <TextView
+                    android:id="@+id/verysad_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/fuente"
+                    android:text="0.0%"
+                    android:textSize="17sp"
+                    android:textColor="@color/pastel_yellow" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/most_recorded_emotion_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:background="@color/mid_light_purple"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/most_recorded_emotion_image"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/muyfeliz" />
+
+            <TextView
+                android:id="@+id/most_recorded_emotion_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fuente"
+                android:text="¡Muy feliz fue la emoción más registrada este mes!"
+                android:textSize="17sp"
+                android:textColor="@color/pastel_yellow"
+                android:layout_marginStart="10dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
